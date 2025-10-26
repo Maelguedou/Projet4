@@ -8,5 +8,7 @@
 </head>
 <body>
      <h1 class="text-xl font-bold ">      Hello world!    </h1>
+     <a href="{{ route("home2") }}">Module2</a>
+     <a href="{{ route("home3") }}">Module3</a>
 </body>
 </html>
