@@ -1,0 +1,24 @@
+# Fichier de Test pour Livrable
+
+Ce fichier peut être utilisé pour tester l'upload de livrables dans CampusConnect.
+
+## Instructions :
+
+1. Renommez ce fichier en .pdf ou créez un vrai fichier PDF
+2. Connectez-vous en tant qu'étudiant (alice.bernard@campus.com / password)
+3. Allez sur un projet dont vous êtes membre
+4. Cliquez sur "Déposer un Livrable"
+5. Uploadez ce fichier
+
+## Informations à remplir :
+
+- Titre : Rapport d'avancement v1.0
+- Description : Premier livrable du projet
+- Version : 1.0
+- Fichier : Ce fichier de test
+
+Une fois uploadé, vous pourrez :
+- Télécharger le livrable
+- L'enseignant pourra l'évaluer (valider/refuser)
+- Voir le statut et le feedback
+

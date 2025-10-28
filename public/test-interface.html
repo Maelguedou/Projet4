@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Interface - CampusConnect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">🔍 Test de l'Interface CampusConnect</h1>
+        
+        <!-- Instructions -->
+        <div class="bg-blue-100 border-l-4 border-blue-500 p-4 mb-8">
+            <h2 class="font-bold text-lg mb-2">📋 Instructions</h2>
+            <ol class="list-decimal list-inside space-y-2">
+                <li>Connectez-vous d'abord sur <a href="/login" class="text-blue-600 underline">la page de connexion</a></li>
+                <li>Utilisez un compte <strong>étudiant</strong> : alice.bernard@campus.com / password</li>
+                <li>Revenez sur cette page</li>
+                <li>Cliquez sur "Vérifier mon authentification"</li>
+            </ol>
+        </div>
+
+        <!-- Test d'authentification -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">1️⃣ Test d'Authentification</h2>
+            <button onclick="testAuth()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Vérifier mon authentification
+            </button>
+            <div id="auth-result" class="mt-4"></div>
+        </div>
+
+        <!-- Liens de test -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">2️⃣ Liens de Test</h2>
+            <div class="space-y-3">
+                <div>
+                    <a href="/dashboard" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        📊 Aller au Dashboard
+                    </a>
+                    <span class="ml-2 text-gray-600">→ Vous devriez voir le bouton "Nouveau Projet"</span>
+                </div>
+                <div>
+                    <a href="/projects" class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                        📋 Liste des Projets
+                    </a>
+                    <span class="ml-2 text-gray-600">→ Cliquez sur un projet pour voir les détails</span>
+                </div>
+                <div>
+                    <a href="/projects/1" class="inline-block bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+                        📄 Projet #1 (Détails)
+                    </a>
+                    <span class="ml-2 text-gray-600">→ Vous devriez voir "Déposer un Livrable"</span>
+                </div>
+                <div>
+                    <a href="/projects/create" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        ➕ Créer un Projet (Direct)
+                    </a>
+                    <span class="ml-2 text-gray-600">→ Formulaire de création</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comptes de test -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4">3️⃣ Comptes de Test</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-4 py-2 text-left">Rôle</th>
+                            <th class="px-4 py-2 text-left">Email</th>
+                            <th class="px-4 py-2 text-left">Mot de passe</th>
+                            <th class="px-4 py-2 text-left">Peut créer projet?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b bg-green-50">
+                            <td class="px-4 py-2 font-bold">👨‍🎓 Étudiant</td>
+                            <td class="px-4 py-2">alice.bernard@campus.com</td>
+                            <td class="px-4 py-2">password</td>
+                            <td class="px-4 py-2 text-green-600 font-bold">✅ OUI</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="px-4 py-2">👨‍🎓 Étudiant</td>
+                            <td class="px-4 py-2">bob.durand@campus.com</td>
+                            <td class="px-4 py-2">password</td>
+                            <td class="px-4 py-2 text-green-600 font-bold">✅ OUI</td>
+                        </tr>
+                        <tr class="border-b bg-red-50">
+                            <td class="px-4 py-2 font-bold">👨‍🏫 Enseignant</td>
+                            <td class="px-4 py-2">marie.dupont@campus.com</td>
+                            <td class="px-4 py-2">password</td>
+                            <td class="px-4 py-2 text-red-600 font-bold">❌ NON</td>
+                        </tr>
+                        <tr class="border-b bg-red-50">
+                            <td class="px-4 py-2 font-bold">👨‍💼 Admin</td>
+                            <td class="px-4 py-2">admin@campus.com</td>
+                            <td class="px-4 py-2">password</td>
+                            <td class="px-4 py-2 text-red-600 font-bold">❌ NON</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Diagnostic -->
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mt-8">
+            <h2 class="font-bold text-lg mb-2">⚠️ Si vous ne voyez pas les boutons</h2>
+            <ul class="list-disc list-inside space-y-1">
+                <li>Vérifiez que vous êtes connecté en tant qu'<strong>étudiant</strong></li>
+                <li>Videz le cache du navigateur (Ctrl+Shift+R)</li>
+                <li>Déconnectez-vous et reconnectez-vous</li>
+                <li>Consultez le fichier <code>GUIDE_DEBOGAGE.md</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function testAuth() {
+            const resultDiv = document.getElementById('auth-result');
+            resultDiv.innerHTML = '<p class="text-gray-600">Vérification en cours...</p>';
+            
+            try {
+                const response = await fetch('/test-auth');
+                const data = await response.json();
+                
+                if (data.authenticated) {
+                    const canCreate = data.can_create_project;
+                    resultDiv.innerHTML = `
+                        <div class="border rounded p-4 ${canCreate ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}">
+                            <h3 class="font-bold text-lg mb-2">✅ Vous êtes connecté !</h3>
+                            <div class="space-y-1">
+                                <p><strong>Nom :</strong> ${data.user.name}</p>
+                                <p><strong>Email :</strong> ${data.user.email}</p>
+                                <p><strong>Rôle :</strong> <span class="font-bold">${data.user.role}</span></p>
+                            </div>
+                            <div class="mt-3 p-3 ${canCreate ? 'bg-green-100' : 'bg-red-100'} rounded">
+                                <p class="font-bold ${canCreate ? 'text-green-800' : 'text-red-800'}">
+                                    ${canCreate ? '✅ Vous POUVEZ créer des projets' : '❌ Vous NE POUVEZ PAS créer de projets'}
+                                </p>
+                                ${!canCreate ? '<p class="text-sm mt-1">Connectez-vous avec un compte étudiant pour créer des projets.</p>' : ''}
+                            </div>
+                            <div class="mt-3 text-sm">
+                                <p><strong>Vérifications :</strong></p>
+                                <ul class="list-disc list-inside">
+                                    <li>Est étudiant : ${data.checks.isEtudiant ? '✅' : '❌'}</li>
+                                    <li>Est enseignant : ${data.checks.isEnseignant ? '✅' : '❌'}</li>
+                                    <li>Est admin : ${data.checks.isAdmin ? '✅' : '❌'}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="border border-red-500 rounded p-4 bg-red-50">
+                            <h3 class="font-bold text-lg mb-2 text-red-800">❌ Non connecté</h3>
+                            <p>Vous devez vous connecter d'abord.</p>
+                            <a href="/login" class="inline-block mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Se connecter
+                            </a>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="border border-red-500 rounded p-4 bg-red-50">
+                        <h3 class="font-bold text-lg mb-2 text-red-800">❌ Erreur</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
