@@ -77,6 +77,8 @@
                                                         {{ $project->title }}
                                                     </a>
                                                 </h5>
+                                                @if($project->status === 'en_attente')
+                                                    <span class="badge bg-warning badge-custom">
                                                         <i class="bi bi-clock"></i> En Attente
                                                     </span>
                                                 @elseif($project->status === 'en_cours')
