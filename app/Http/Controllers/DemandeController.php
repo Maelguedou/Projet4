@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Demande;
+use App\Models\Enseignant;
+use App\Models\Materiel;
+use App\Models\Salle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DemandeController extends Controller
 {
@@ -12,7 +17,9 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        //
+        $demandes = Demande::with(['salle', 'materiel', 'user'])->get();
+
+        return view('demandes.index', compact('demandes'));
     }
 
     /**
@@ -20,7 +27,10 @@ class DemandeController extends Controller
      */
     public function create()
     {
-        //
+        $salles = Salle::all();
+        $materiels = Materiel::all();
+
+        return view('demandes.create', compact('salles', 'materiels')); //le dossier demandes dans resources/views
     }
 
     /**
@@ -28,7 +38,18 @@ class DemandeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $valids = $request->validate([
+            'type' => 'required',
+            'besoin' => 'required',
+            'classe' => 'required',
+        ]);
+
+        $valids['user_id'] = Auth::id();
+        $valids['statut'] = 'en_attente';
+        $valids['date_demande'] = now();
+        Demande::create($valids);
+
+        return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }
 
     /**

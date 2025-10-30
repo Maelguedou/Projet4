@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\EnseignantController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/demandes', [DemandeController::class, 'index'])->name('demandes.index');
+Route::get('/demandes/create', [DemandeController::class, 'create'])->name('demandes.create');
+Route::post('/demandes', [DemandeController::class, 'store'])->name('demandes.store');
+
+Route::middleware(['auth','role:enseignant'])->group(function(){
+    Route::get('/enseignant/dashboard', [EnseignantController::class,'dashboard'])->name('enseignant.dashboard');
+    Route::resource('demandes', DemandeController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -12,24 +12,28 @@ class Demande extends Model
         'type',
         'besoin',
         'matricule_enseignant',
-        'id_admin',
+        'admin_id',
         'id_salle',
         'id_materiel',
         'classe',
         'date_demande',
-        'statut'
+        'statut',
+        'user_id',
     ];
 
-    public function enseignant()
-    {
-        return $this->belongsTo(Enseignant::class, 'matricule_enseignant', 'matricule');
-    }
+    protected $dates = [
+        'date_demande',
+        'created_at',
+        'updated_at'
+    ];
 
-        public function admin()
-    {
-        return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
+    public function user()  {
+        return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function admin()  {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+    
         public function salle()
     {
         return $this->belongsTo(Salle::class, 'id_salle', 'id_salle');
@@ -40,4 +44,8 @@ class Demande extends Model
         return $this->belongsTo(Materiel::class, 'id_materiel', 'id_materiel');
     }
 
+    public function getFormattedDateAttributes() //format plus lisible de la date
+    {
+        return $this->date_demande ? $this->date_demande->format('d/m/Y H:i') : null;
+    }
 }
