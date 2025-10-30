@@ -9,4 +9,9 @@ class Salle extends Model
     protected $table = 'salles';
     protected $primaryKey = 'id_salle';
     protected $fillable = ['nom', 'localisation', 'statut'];
+
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class, 'id_salle', 'id_salle');
+    }
 }
