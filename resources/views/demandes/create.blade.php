@@ -7,21 +7,28 @@
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white p-6 rounded shadow">
+            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
                 <form action="{{ route('demandes.store') }}" method="post">
                     @csrf
 
-                    <label for="type">Type (salle / matériel):</label>
-                    <input type="text" name="type" class="border rounded w-full" required><br><br>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-200" for="type">Type (salle / matériel):</label>
+                        <input type="text" name="type" class="border rounded w-full p-2" required><br><br>
+                    </div>
 
-                    <label for="besoin">Besoin :</label>
-                    <textarea name="besoin" class="border rounded w-full" required></textarea><br><br>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-200" for="besoin">Description du besoin :</label>
+                        <textarea name="besoin" class="border rounded w-full p-2" rows="3" required></textarea><br><br>
+                    </div>
 
-                    <label for="classe">Classe concernée :</label>
-                    <input type="text" name="classe" class="border rounded w-full" required><br><br>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 dark:text-gray-200" for="classe">Classe concernée :</label>
+                        <input type="text" name="classe" class="border rounded w-full p-2" required><br><br>
+                    </div>
 
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-3" >Soumettre</button>
-
+                    <div class="text-right">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-3 hover:bg-blue-700" >Soumettre la demande</button>
+                    </div>
                     <br>
                     <a href="{{ route('demandes.index') }}">Voir mes demandes</a>
                 </div>

@@ -17,7 +17,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::with(['salle', 'materiel', 'user'])->get();
+        $demandes = Demande::with(['salle', 'materiel', 'user'])->orderByDesc('date_demande')->get();
 
         return view('demandes.index', compact('demandes'));
     }
