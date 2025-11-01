@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('demandes', function (Blueprint $table) {
             $table->id('id_demande');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('type', ['salle', 'materiel']);
-            $table->enum('besoin', ['projecteur', 'ordinateur', 'autre', 'aucun']);
+            //$table->enum('type', ['salle', 'materiel']);
+            $table->string('type', 70);
+            $table->string('besoin')->nullable();
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->unsignedBigInteger('id_salle');
+            $table->unsignedBigInteger('id_salle')->nullable();
             $table->foreign('id_salle')->references('id_salle')->on('salles')->onDelete('cascade');
-            $table->unsignedBigInteger('id_materiel');
+            $table->unsignedBigInteger('id_materiel')->nullable();
             $table->foreign('id_materiel')->references('id_materiel')->on('materiels')->onDelete('cascade');
             $table->string('classe');
-            $table->timestamp('date_demande')->useCurrent();
+            $table->timestamp('date_demande');
             $table->enum('statut', ['en_attente', 'acceptee', 'refusee'])->default('en_attente');
             $table->timestamps();
         });

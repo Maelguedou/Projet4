@@ -39,11 +39,23 @@ class DemandeController extends Controller
     public function store(Request $request)
     {
         $valids = $request->validate([
-            'type' => 'required',
-            'besoin' => 'required',
-            'classe' => 'required',
+            'type' => 'required|array|min:1',
+            'type.*' => 'in:Salle,Matériel',
+            'besoin' => 'nullable|string',
+            'classe' => 'required|string|max:255',
         ]);
 
+        $type = implode(', ', $request->input('type')); //peut contenir salle ou matétiel
+
+        if (in_array('Salle', $request->input('type')) && !in_array('Matériel', $request->input('type'))) {
+            $besoin = "Rien à préciser";
+        } else {
+            $besoin = $request->input('besoin') ?: 'Non précisé';
+        }
+
+        $valids['type'] = $type;
+        $valids['besoin'] = $besoin;
+        //$valids['classe'] = $request->claase;
         $valids['user_id'] = Auth::id();
         $valids['statut'] = 'en_attente';
         $valids['date_demande'] = now();

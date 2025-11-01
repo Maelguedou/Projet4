@@ -12,10 +12,8 @@
             </div>
         @endif
 
-        <div class="mb-4 text-right">
-            <a href="{{ route('demandes.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                + Nouvelle demande
-            </a>
+        <div>
+            <a href="{{ route('enseignant.dashboard') }}">Retour</a>
         </div>
 
         <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
@@ -58,6 +56,10 @@
         </div>
     </div>
 
-    <br>
-    <a href="{{ route(name: 'demandes.create') }}">Créer une nouvelle demande</a>
+    <div class="mb-4 text-right">
+        <a href="{{ route('demandes.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            + Nouvelle demande
+        </a>
+    </div>
+
 </x-app-layout>

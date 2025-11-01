@@ -25,7 +25,7 @@ Route::get('home3', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('enseignant/dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -40,7 +40,7 @@ Route::get('/demandes/create', [DemandeController::class, 'create'])->name('dema
 Route::post('/demandes', [DemandeController::class, 'store'])->name('demandes.store');
 
 Route::middleware(['auth','role:enseignant'])->group(function(){
-    Route::get('/enseignant/dashboard', [EnseignantController::class,'dashboard'])->name('enseignant.dashboard');
+    Route::get('/enseignant/dashboard', [EnseignantController::class, 'dashboard'])->name('enseignant.dashboard');
     Route::resource('demandes', DemandeController::class);});
 
 Route::middleware(['auth','role:admin'])->group(function(){
