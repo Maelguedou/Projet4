@@ -10,7 +10,8 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view("admin.dashboard");
+        $users = User::where("role","=","enseignant")->get();
+        return view("admin/dashboard", compact("users"));
     }
 
     public function Create(){
