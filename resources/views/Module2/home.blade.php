@@ -9,9 +9,8 @@
 <body class="bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 min-h-screen">
 
   {{-- HEADER MODERNE --}}
-  <header class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
+  <header class="page-header sticky top-0 z-50">
+    <div class="page-header-content">
       {{-- Barre principale --}}
       <div class="py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
         

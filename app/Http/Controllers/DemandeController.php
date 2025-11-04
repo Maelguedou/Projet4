@@ -38,28 +38,31 @@ class DemandeController extends Controller
      */
     public function store(Request $request)
     {
-        $valids = $request->validate([
+        $request->validate([
             'type' => 'required|array|min:1',
             'type.*' => 'in:Salle,Matériel',
-            'besoin' => 'nullable|string',
             'classe' => 'required|string|max:255',
+            'besoin_m' => 'nullable|string',
+            'autre_materiel' => 'nullable|string',
         ]);
 
-        $type = implode(', ', $request->input('type')); //peut contenir salle ou matétiel
+        $demande = Demande::create([
+            'type' => implode(', ', $request->type),
+            'classe' => $request->classe,
+            'user_id' => Auth::id(),
+            'statut' => 'en_attente',
+            'date_demande' => now(),
+        ]);
 
-        if (in_array('Salle', $request->input('type')) && !in_array('Matériel', $request->input('type'))) {
-            $besoin = "Rien à préciser";
-        } else {
-            $besoin = $request->input('besoin') ?: 'Non précisé';
+        //création du besoin associé(si marériel choisi)
+        if (in_array('Matériel', $request->type)) {
+            $demande->besoin()->create([
+                'projecteur' => $request->has('projecteur'),
+                'ordinateur' => $request->has('ordinateur'),
+                'haut_parleur' => $request->has('haut_parleur'),
+                'autre' => $request->input('autre'), //texte libre
+            ]);
         }
-
-        $valids['type'] = $type;
-        $valids['besoin'] = $besoin;
-        //$valids['classe'] = $request->claase;
-        $valids['user_id'] = Auth::id();
-        $valids['statut'] = 'en_attente';
-        $valids['date_demande'] = now();
-        Demande::create($valids);
 
         return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }

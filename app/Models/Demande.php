@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Demande extends Model
 {
     protected $table = 'demandes';
-    protected $primaryKey = 'id_demande';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'type',
         'besoin',
@@ -42,6 +42,11 @@ class Demande extends Model
         public function materiel()
     {
         return $this->belongsTo(Materiel::class, 'id_materiel', 'id_materiel');
+    }
+
+    public function besoin()
+    {
+        return $this->hasOne(Besoin::class, 'demande_id');
     }
 
     public function getFormattedDateAttributes() //format plus lisible de la date
