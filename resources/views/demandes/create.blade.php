@@ -62,20 +62,20 @@
                         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
                             <input type="text" name="classe" id="classe"
                                    class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
-                                          focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 hover:border-green-300"
+                                          focus:ring-green-500 focus:border-emerald-500 transition-all duration-200 hover:border-green-300"
                                    required placeholder="Ex: GL2">
                             <p class="mt-2 text-sm text-gray-500">Indiquez la classe pour laquelle vous faites la demande</p>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between pt-6 border-t border-gray-100">
-                        <a href="{{ route('demandes.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-600 transition-colors">
+                        <a href="{{ route('demandes.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-[#0E8345] transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
                             Retour à mes demandes
                         </a>
-                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#0E8345] to-[#15803D]
                                                    text-white font-medium rounded-lg shadow-md transform hover:scale-105 hover:shadow-lg
                                                    active:scale-95 transition-all duration-200">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

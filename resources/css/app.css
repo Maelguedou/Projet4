@@ -245,3 +245,25 @@
 .label {
     @apply block text-gray-700 dark:text-gray-200 font-semibold mb-2;
 }
+
+:root {
+    --vert-uac: #0E8345;
+    --vert-uac-clair: #16A34A;
+    --vert-uac-fonce: #15803D;
+}
+
+.text-uac {
+    color: var(--vert-uac);
+}
+
+.bg-uac {
+    background-color: var(--vert-uac); /*  var() set the backgound color of an element*/
+}
+
+.bg-uac-hover:hover {
+    background-color: var(--vert-uac-fonce);
+}
+
+.border-uac {
+    border-color: var(--vert-uac);
+}

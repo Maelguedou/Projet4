@@ -50,7 +50,8 @@
                 transform: none !important;
             }
         }
- */    </style>
+ */
+    </style>
 
     <x-slot name="header">
         <div class="modern-header">
@@ -70,7 +71,7 @@
 
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
         @if (session('success'))
-            <div class="mb-4 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg shadow-sm animate-fade-in-slide">
+            <div class="mb-4 p-4 bg-[#0E8345] hover:bg-[#15803D] border border-green-200 text-[#0E8345] rounded-lg shadow-sm animate-fade-in-slide">
                 {{ session('success') }}
             </div>
         @endif
@@ -84,7 +85,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('demandes.create') }}" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-sm text-sm transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-md active:scale-95">
+                <a href="{{ route('demandes.create') }}" class="inline-flex items-center gap-2 bg-[#0E8345] hover:bg-[#15803D] text-white px-4 py-2 rounded-md shadow-sm text-sm transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-md active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/></svg>
                     Nouvelle demande
                 </a>

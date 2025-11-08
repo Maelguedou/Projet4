@@ -4,7 +4,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             {{-- Carte de bienvenue --}}
-            <div class="bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl shadow-xl p-8 mb-8 text-white animate-slide-down transition-all duration-300 hover:shadow-2xl">
+            <div class="bg-gradient-to-r from-[#0E8345] to-[#15803D] rounded-2xl shadow-xl p-8 mb-8 text-white animate-slide-down transition-all duration-300 hover:shadow-2xl">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex items-center gap-6 animate-fade-scale delay-200">
                         <div class="bg-white/20 backdrop-blur-sm p-4 rounded-2xl transition-transform duration-300 hover:scale-110">
@@ -128,7 +128,7 @@
                 {{-- Section: Mes demandes --}}
                 <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                     <div class="bg-gradient-to-r from-emerald-50 to-green-50 px-6 py-5 border-b">
-                        <h3 class="text-xl font-bold text-purple-800 flex items-center gap-2">
+                        <h3 class="text-xl font-bold text-emerald-800 flex items-center gap-2">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -158,7 +158,7 @@
                             </li>
                         </ul>
                         <a href="{{ route('demandes.index') }}"
-                           class="block w-full text-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md transition transform hover:scale-105">
+                           class="block w-full text-center px-6 py-3 bg-green-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-md transition transform hover:scale-105">
                             Voir mes demandes
                         </a>
                     </div>
