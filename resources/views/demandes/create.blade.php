@@ -14,13 +14,13 @@
                     <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.1s">
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3">Type de demande</label>
                         <div class="flex flex-wrap items-center gap-6 mt-2">
-                            <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-sky-200 transition-all duration-200">
-                                <input type="checkbox" id="type_salle" name="type[]" value="Salle" class="h-5 w-5 text-sky-600 border-gray-300 rounded focus:ring-sky-500 transition-colors"> 
-                                <span class="ml-3 font-medium group-hover:text-sky-600 transition-colors">Salle</span>
+                            <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-green-200 transition-all duration-200">
+                                <input type="checkbox" id="type_salle" name="type[]" value="Salle" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                                <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Salle</span>
                             </label>
-                            <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-sky-200 transition-all duration-200">
-                                <input type="checkbox" id="type_materiel" name="type[]" value="Matériel" class="h-5 w-5 text-sky-600 border-gray-300 rounded focus:ring-sky-500 transition-colors"> 
-                                <span class="ml-3 font-medium group-hover:text-sky-600 transition-colors">Matériel</span>
+                            <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-green-200 transition-all duration-200">
+                                <input type="checkbox" id="type_materiel" name="type[]" value="Matériel" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-sky-500 transition-colors">
+                                <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Matériel</span>
                             </label>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
     <div id="besoins-sections" class="mb-8 opacity-0 hidden transform scale-95 transition-all duration-300 ease-out animate-fade-in-up" style="animation-delay: 0.2s">
         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="besoin_m">Matériel nécessaire</label>
         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-            <select name="besoin_m" id="besoin_m" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-sky-500 focus:border-sky-500 bg-white dark:bg-gray-700 dark:text-gray-200 transition-all duration-200 hover:border-sky-300">
+            <select name="besoin_m" id="besoin_m" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 dark:text-gray-200 transition-all duration-200 hover:border-green-300">
                 <option value="">-- Sélectionnez le matériel --</option>
                 <option value="projecteur">Projecteur</option>
                 <option value="ordinateur">Ordinateur</option>
@@ -38,9 +38,9 @@
 
             <div id="autre-section" class="mt-4 opacity-0 hidden transform -translate-y-2 transition-all duration-300 ease-out">
                 <label for="autre_materiel" class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Précisez le matériel nécessaire</label>
-                <input type="text" name="autre_materiel" id="autre_materiel" 
-                       class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200 
-                              focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 hover:border-sky-300" 
+                <input type="text" name="autre_materiel" id="autre_materiel"
+                       class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
+                              focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300"
                        placeholder="Ex: Micros, câbles HDMI...">
             </div>
         </div>
@@ -50,9 +50,9 @@
                             <div class="mb-8 animate-fade-in-up" id="besoin_salle" style="animation-delay: 0.2s">
                                 <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="salle_b">Détails de la salle</label>
                                 <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                                    <textarea name="salle_b" id="salle_b" 
-                                              class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-gray-50 dark:bg-gray-700 dark:text-gray-200 
-                                                     resize-none transition-all duration-200" 
+                                    <textarea name="salle_b" id="salle_b"
+                                              class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-gray-50 dark:bg-gray-700 dark:text-gray-200
+                                                     resize-none transition-all duration-200"
                                               rows="3" readonly>Rien à préciser</textarea>
                                 </div>
                             </div>
@@ -62,20 +62,20 @@
                         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
                             <input type="text" name="classe" id="classe"
                                    class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
-                                          focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 hover:border-sky-300"
+                                          focus:ring-sky-500 focus:border-sky-500 transition-all duration-200 hover:border-green-300"
                                    required placeholder="Ex: GL2">
                             <p class="mt-2 text-sm text-gray-500">Indiquez la classe pour laquelle vous faites la demande</p>
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between pt-6 border-t border-gray-100">
-                        <a href="{{ route('demandes.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-sky-600 transition-colors">
+                        <a href="{{ route('demandes.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-600 transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
                             Retour à mes demandes
                         </a>
-                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-600 to-blue-600
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600
                                                    text-white font-medium rounded-lg shadow-md transform hover:scale-105 hover:shadow-lg
                                                    active:scale-95 transition-all duration-200">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

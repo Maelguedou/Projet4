@@ -1,6 +1,6 @@
 <x-app-layout>
     <style>
-        @keyframes fade-in-slide {
+/*         @keyframes fade-in-slide {
             0% {
                 opacity: 0;
                 transform: translateY(-10px);
@@ -36,13 +36,13 @@
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
-        .delay-5 { animation-delay: 0.5s; }
+ */        .delay-5 { animation-delay: 0.5s; }
         .delay-6 { animation-delay: 0.6s; }
         .delay-7 { animation-delay: 0.7s; }
         .delay-8 { animation-delay: 0.8s; }
         .delay-9 { animation-delay: 0.9s; }
 
-        @media (prefers-reduced-motion: reduce) {
+/*         @media (prefers-reduced-motion: reduce) {
             .animate-fade-in-slide,
             .animate-fade-in-up {
                 animation: none !important;
@@ -50,7 +50,7 @@
                 transform: none !important;
             }
         }
-    </style>
+ */    </style>
 
     <x-slot name="header">
         <div class="modern-header">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('demandes.create') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-sm text-sm transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-md active:scale-95">
+                <a href="{{ route('demandes.create') }}" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-sm text-sm transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-md active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/></svg>
                     Nouvelle demande
                 </a>
