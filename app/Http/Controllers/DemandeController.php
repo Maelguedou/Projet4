@@ -17,7 +17,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::with(['salle', 'materiel', 'user'])->orderByDesc('date_demande')->get();
+        $demandes = Demande::with('besoin')->where('user_id', Auth::id())->orderByDesc('date_demande')->get();
 
         return view('demandes.index', compact('demandes'));
     }
@@ -42,9 +42,28 @@ class DemandeController extends Controller
             'type' => 'required|array|min:1',
             'type.*' => 'in:Salle,Matériel',
             'classe' => 'required|string|max:255',
-            'besoin_m' => 'nullable|string',
             'autre_materiel' => 'nullable|string',
         ]);
+
+        $besoins = [];
+
+        //création du besoin associé(si marériel choisi)
+        if (in_array('Matériel', $request->type)) {
+            if ($request->has('projecteur')) {
+                $besoins[] = 'Projecteur';
+            }
+            if ($request->has('ordinateur')) {
+                $besoins[] = 'Ordinateur';
+            }
+            if ($request->has('haut_parleur')) {
+                $besoins[] = 'Haut_parleur';
+            }
+            if ($request->filled('autre_materiel')) {
+                $besoins[] = $request->input('autre_materiel');
+            }
+        }
+
+        //dd($besoins);
 
         $demande = Demande::create([
             'type' => implode(', ', $request->type),
@@ -52,17 +71,8 @@ class DemandeController extends Controller
             'user_id' => Auth::id(),
             'statut' => 'en_attente',
             'date_demande' => now(),
+            'besoin' => json_encode($besoins),
         ]);
-
-        //création du besoin associé(si marériel choisi)
-        if (in_array('Matériel', $request->type)) {
-            $demande->besoin()->create([
-                'projecteur' => $request->has('projecteur'),
-                'ordinateur' => $request->has('ordinateur'),
-                'haut_parleur' => $request->has('haut_parleur'),
-                'autre' => $request->input('autre'), //texte libre
-            ]);
-        }
 
         return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }

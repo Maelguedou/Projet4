@@ -110,26 +110,19 @@
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-150 animate-fade-in-up delay-{{ $loop->index }}">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{{ ucfirst($demande->type) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                                    @php
-                                        // Support both string and structured besoin
-                                        $besoinLabel = '';
-                                        if (is_string($demande->besoin)) {
-                                            $besoinLabel = ucfirst($demande->besoin);
-                                        } elseif (is_object($demande->besoin) || is_array($demande->besoin)) {
-                                            $b = [];
-                                            if (!empty($demande->besoin->projecteur ?? null)) $b[] = 'Projecteur';
-                                            if (!empty($demande->besoin->ordinateur ?? null)) $b[] = 'Ordinateur';
-                                            if (!empty($demande->besoin->haut_parleur ?? null)) $b[] = 'Haut-parleur';
-                                            if (!empty($demande->besoin->autre ?? null)) $b[] = $demande->besoin->autre;
-                                            $besoinLabel = $b ? implode(', ', $b) : 'Aucun';
-                                        } else {
-                                            $besoinLabel = 'Aucun';
-                                        }
-                                    @endphp
-                                    {{ $besoinLabel }}
+                                    @if ($demande->besoin)
+                                        @php
+                                            $besoins = is_string($demande->besoin)
+                                                ? json_decode($demande->besoin, true)
+                                                : (array) $demande->besoin;
+                                        @endphp
+                                        {{ !empty($besoins) ? implode(', ', $besoins) : 'Aucun' }}
+                                    @else
+                                        Aucun
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{{ $demande->classe }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $demande->formatted_date }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $demande->date_demande }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     @if ($demande->statut == 'en_attente')
                                         <span class="inline-flex items-center px-2 py-1 rounded-full text-yellow-700 bg-yellow-100">🕐 En attente</span>
@@ -171,7 +164,12 @@
                     </div>
 
                     <div class="mt-3 text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Besoin:</strong> {{ is_string($demande->besoin) ? ucfirst($demande->besoin) : ($demande->besoin ? implode(', ', (array) $demande->besoin) : 'Aucun') }}
+                        @php
+                            $besoinData = is_string($demande->besoin)
+                                ? json_decode($demande->besoin, true)
+                                : (array) $demande->besoin;
+                        @endphp
+                        <strong>Besoin :</strong> {{ !empty($besoinData) ? implode(', ', $besoinData) : 'Aucun' }}
                     </div>
                 </div>
             @empty

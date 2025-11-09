@@ -25,37 +25,65 @@
                         </div>
                     </div>
 
-    <div id="besoins-sections" class="mb-8 opacity-0 hidden transform scale-95 transition-all duration-300 ease-out animate-fade-in-up" style="animation-delay: 0.2s">
-        <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="besoin_m">Matériel nécessaire</label>
-        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-            <select name="besoin_m" id="besoin_m" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 dark:text-gray-200 transition-all duration-200 hover:border-green-300">
-                <option value="">-- Sélectionnez le matériel --</option>
-                <option value="projecteur">Projecteur</option>
-                <option value="ordinateur">Ordinateur</option>
-                <option value="haut_parleur">Haut-parleur</option>
-                <option value="autre">Autre matériel</option>
-            </select>
+            <div id="besoins-sections"
+                class="mb-8 opacity-0 hidden transform scale-95 transition-all duration-300 ease-out animate-fade-in-up"
+                style="animation-delay: 0.2s">
+                <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3">
+                    Matériel nécessaire
+                </label>
 
-            <div id="autre-section" class="mt-4 opacity-0 hidden transform -translate-y-2 transition-all duration-300 ease-out">
-                <label for="autre_materiel" class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Précisez le matériel nécessaire</label>
-                <input type="text" name="autre_materiel" id="autre_materiel"
-                       class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
-                              focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300"
-                       placeholder="Ex: Micros, câbles HDMI...">
+                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="projecteur" id="projecteur"
+                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <span class="text-gray-700 dark:text-gray-200">Projecteur</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="ordinateur" id="ordinateur"
+                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <span class="text-gray-700 dark:text-gray-200">Ordinateur</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="haut_parleur" id="haut_parleur"
+                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <span class="text-gray-700 dark:text-gray-200">Haut-parleur</span>
+                        </label>
+
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="autre" id="autre"
+                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <span class="text-gray-700 dark:text-gray-200">Autre matériel</span>
+                        </label>
+                    </div>
+
+                    <!-- Section "Autre" qui s’affiche uniquement si cochée -->
+                    <div id="autre-section"
+                        class="mt-4 opacity-0 hidden transform -translate-y-2 transition-all duration-300 ease-out">
+                        <label for="autre_materiel"
+                            class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">
+                            Précisez le matériel nécessaire
+                        </label>
+                        <input type="text" name="autre_materiel" id="autre_materiel"
+                            class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
+                                    focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300"
+                            placeholder="Ex: Micros, câbles HDMI...">
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-                    <!-- description du besoin (salle uniquement) -->
-                            <div class="mb-8 animate-fade-in-up" id="besoin_salle" style="animation-delay: 0.2s">
-                                <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="salle_b">Détails de la salle</label>
-                                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                                    <textarea name="salle_b" id="salle_b"
-                                              class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-gray-50 dark:bg-gray-700 dark:text-gray-200
-                                                     resize-none transition-all duration-200"
-                                              rows="3" readonly>Rien à préciser</textarea>
-                                </div>
-                            </div>
+            <!-- description du besoin (salle uniquement) -->
+                    <div class="mb-8 animate-fade-in-up" id="besoin_salle" style="animation-delay: 0.2s">
+                        <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="salle_b">Détails de la salle</label>
+                        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                            <textarea name="salle_b" id="salle_b"
+                                        class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-gray-50 dark:bg-gray-700 dark:text-gray-200
+                                                resize-none transition-all duration-200"
+                                        rows="3" readonly>Rien à préciser</textarea>
+                        </div>
+                    </div>
                     
                     <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.3s">
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="classe">Classe concernée</label>
@@ -89,102 +117,98 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Elements sélection sécurisée avec vérification d'existence
-            const elements = {
-                typeSalle: document.getElementById('type_salle'),
-                typeMateriel: document.getElementById('type_materiel'),
-                salleBlock: document.getElementById('besoin_salle'),
-                besoinSection: document.getElementById('besoins-sections'),
-                besoinSelect: document.getElementById('besoin_m'),
-                autreSection: document.getElementById('autre-section'),
-                salleField: document.getElementById('salle_b'),
-                form: document.getElementById('form-demande')
-            };
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = {
+        typeSalle: document.getElementById('type_salle'),
+        typeMateriel: document.getElementById('type_materiel'),
+        salleBlock: document.getElementById('besoin_salle'),
+        besoinSection: document.getElementById('besoins-sections'),
+        autreCheckbox: document.getElementById('autre'),
+        autreSection: document.getElementById('autre-section'),
+        salleField: document.getElementById('salle_b'),
+        form: document.getElementById('form-demande')
+    };
 
-            // Vérifie si tous les éléments requis sont présents
-            const requiredElements = ['typeSalle', 'typeMateriel', 'salleBlock', 'besoinSection'];
-            const missingElements = requiredElements.filter(el => !elements[el]);
-            if (missingElements.length > 0) {
-                console.error('Éléments manquants:', missingElements);
-                return; // Arrête l'exécution si des éléments essentiels manquent
+    const requiredElements = ['typeSalle', 'typeMateriel', 'salleBlock', 'besoinSection'];
+    const missingElements = requiredElements.filter(el => !elements[el]);
+    if (missingElements.length > 0) {
+        console.error('Éléments manquants:', missingElements);
+        return;
+    }
+
+    function animateElement(element, show) {
+        if (!element) return;
+
+        if (show) {
+            element.classList.remove('hidden');
+            element.offsetHeight;
+            requestAnimationFrame(() => {
+                element.classList.remove('opacity-0', 'scale-95', '-translate-y-2');
+            });
+        } else {
+            element.classList.add('opacity-0', 'scale-95');
+            element.addEventListener('transitionend', () => {
+                if (!element.classList.contains('opacity-0')) return;
+                element.classList.add('hidden');
+            }, { once: true });
+        }
+    }
+
+    function updateVisibility() {
+        const salleChecked = elements.typeSalle.checked;
+        const materielChecked = elements.typeMateriel.checked;
+
+        // Animation des sections
+        animateElement(elements.besoinSection, materielChecked);
+        animateElement(elements.salleBlock, !materielChecked);
+
+        // Gestion du champ salle
+        if (elements.salleField) {
+            const shouldBeReadonly = salleChecked && !materielChecked;
+            elements.salleField.value = shouldBeReadonly ? 'Rien à préciser' : '';
+            elements.salleField.readOnly = shouldBeReadonly;
+            elements.salleField.classList.toggle('bg-gray-50', shouldBeReadonly);
+        }
+
+        // Afficher la section "Autre matériel" si la case "autre" est cochée
+        if (elements.autreCheckbox && elements.autreSection) {
+            animateElement(elements.autreSection, elements.autreCheckbox.checked);
+        }
+    }
+
+    let timeout;
+    function debounce(func, wait = 100) {
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    const debouncedUpdate = debounce(updateVisibility);
+
+    // Attacher les écouteurs d'événements
+    elements.typeSalle.addEventListener('change', debouncedUpdate);
+    elements.typeMateriel.addEventListener('change', debouncedUpdate);
+
+    //écoute la case "autre"
+    if (elements.autreCheckbox) {
+        elements.autreCheckbox.addEventListener('change', debouncedUpdate);
+    }
+
+    // Validation du formulaire
+    if (elements.form) {
+        elements.form.addEventListener('submit', (e) => {
+            const isValid = elements.typeSalle.checked || elements.typeMateriel.checked;
+            if (!isValid) {
+                e.preventDefault();
+                alert('Veuillez sélectionner au moins un type de demande (Salle ou Matériel)');
             }
-
-            function animateElement(element, show) {
-                if (!element) return;
-                
-                // Première étape : Afficher/cacher l'élément
-                if (show) {
-                    element.classList.remove('hidden');
-                    // Force un reflow pour que la transition fonctionne
-                    element.offsetHeight;
-                    requestAnimationFrame(() => {
-                        element.classList.remove('opacity-0', 'scale-95', '-translate-y-2');
-                    });
-                } else {
-                    element.classList.add('opacity-0', 'scale-95');
-                    // Attendre la fin de l'animation avant de cacher
-                    element.addEventListener('transitionend', () => {
-                        if (!element.classList.contains('opacity-0')) return;
-                        element.classList.add('hidden');
-                    }, { once: true });
-                }
-            }
-
-            function updateVisibility() {
-                const salleChecked = elements.typeSalle.checked;
-                const materielChecked = elements.typeMateriel.checked;
-
-                // Animation des sections
-                animateElement(elements.besoinSection, materielChecked);
-                animateElement(elements.salleBlock, !materielChecked);
-
-                // Gestion du champ salle
-                if (elements.salleField) {
-                    const shouldBeReadonly = salleChecked && !materielChecked;
-                    elements.salleField.value = shouldBeReadonly ? 'Rien à préciser' : '';
-                    elements.salleField.readOnly = shouldBeReadonly;
-                    elements.salleField.classList.toggle('bg-gray-50', shouldBeReadonly);
-                }
-
-                // Animation de la section "autre"
-                if (elements.besoinSelect && elements.autreSection) {
-                    animateElement(elements.autreSection, elements.besoinSelect.value === 'autre');
-                }
-            }
-
-            // Gestionnaires d'événements avec debounce
-            let timeout;
-            function debounce(func, wait = 100) {
-                return (...args) => {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            }
-
-            const debouncedUpdate = debounce(updateVisibility);
-
-            // Attacher les écouteurs d'événements
-            elements.typeSalle.addEventListener('change', debouncedUpdate);
-            elements.typeMateriel.addEventListener('change', debouncedUpdate);
-            if (elements.besoinSelect) {
-                elements.besoinSelect.addEventListener('change', debouncedUpdate);
-            }
-
-            // Validation du formulaire
-            if (elements.form) {
-                elements.form.addEventListener('submit', (e) => {
-                    const isValid = elements.typeSalle.checked || elements.typeMateriel.checked;
-                    if (!isValid) {
-                        e.preventDefault();
-                        alert('Veuillez sélectionner au moins un type de demande (Salle ou Matériel)');
-                    }
-                });
-            }
-
-            // Initialisation
-            updateVisibility();
         });
-    </script>
+    }
+
+    // Initialisation
+    updateVisibility();
+});
+</script>
 </x-app-layout>

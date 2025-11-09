@@ -10,7 +10,6 @@ class Demande extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'type',
-        'besoin',
         'matricule_enseignant',
         'admin_id',
         'id_salle',
@@ -26,6 +25,11 @@ class Demande extends Model
         'created_at',
         'updated_at'
     ];
+    protected $casts =[
+        'type' => 'array',
+        'besoin' => 'array',
+    ];
+
 
     public function user()  {
         return $this->belongsTo(User::class, 'user_id');
@@ -46,7 +50,7 @@ class Demande extends Model
 
     public function besoin()
     {
-        return $this->hasOne(Besoin::class, 'demande_id');
+        return $this->hasOne(Besoin::class);
     }
 
     public function getFormattedDateAttributes() //format plus lisible de la date
