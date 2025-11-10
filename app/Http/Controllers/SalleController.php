@@ -32,6 +32,6 @@ class SalleController extends Controller
             'localisation'=>$request->localisation,
             'statut'=>$request->statut
         ]);
-        return redirect()->route('dashboard')->with('success', 'Enseignant créé avec succès.');
+        return redirect()->route('dashboard')->with('success', 'Salle créé avec succès.');
     }
 }

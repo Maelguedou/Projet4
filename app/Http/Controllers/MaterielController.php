@@ -25,6 +25,6 @@ class MaterielController extends Controller
             "type"=> $request->type,
             "statut"=> $request->statut,
         ]);
-        return redirect()->route('dashboard')->with('success', 'Enseignant créé avec succès.');
+        return redirect()->route('dashboard')->with('success', 'Materiel créé avec succès.');
     }
 }
