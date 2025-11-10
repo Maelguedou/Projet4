@@ -33,6 +33,11 @@
                         <input type="text" name="classe" class="border rounded w-full p-2 bg-gray-50 dark:bg-gray-700 dark:text-gray-200" required placeholder="GL">
                     </div>
 
+                    <div class="mb-4">
+                        <label for="time">Durée du cours</label>
+                        <input type="number" name="time" id="time" min="1"  required>
+                    </div>
+
                     <div class="text-right">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-3 hover:bg-blue-700" >Soumettre la demande</button>
                     </div>

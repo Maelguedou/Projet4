@@ -29,7 +29,7 @@ class MaterielSeeder extends Seeder
         Materiel::create([
         'nom'=>"Ordinateur",
         "numero"=> "1",
-        "type"=> "projecteur",
+        "type"=> "ordinateur",
         "statut"=> "occupee",
        ]);
        

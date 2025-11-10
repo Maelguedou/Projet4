@@ -45,7 +45,7 @@ class DemandeController extends Controller
             'classe' => 'required|string|max:255',
         ]);
 
-        $type = implode(', ', $request->input('type')); //peut contenir salle ou matétiel
+        // $type = implode(', ', $request->input('type')); //peut contenir salle ou matétiel
 
         if (in_array('Salle', $request->input('type')) && !in_array('Matériel', $request->input('type'))) {
             $besoin = "Rien à préciser";
@@ -53,7 +53,8 @@ class DemandeController extends Controller
             $besoin = $request->input('besoin') ?: 'Non précisé';
         }
 
-        $valids['type'] = $type;
+        $valids['type'] = $request->input('type');
+        $valids['time'] = $request->input('time');
         $valids['besoin'] = $besoin;
         //$valids['classe'] = $request->claase;
         $valids['user_id'] = Auth::id();

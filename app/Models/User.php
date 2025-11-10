@@ -47,4 +47,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class, 'user_id');
+    }
+
+    public function demandesAdmin()
+    {
+        return $this->hasMany(Demande::class, 'admin_id');
+    }
+
 }

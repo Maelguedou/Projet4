@@ -13,8 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //enrégistre le middleware Role dans le système de Laravel et le rend utilisable dans toutes les routes via le mot-clé 'role'
         $middleware->alias([
-            'role'=>\App\Http\Middleware\Role::class,
+            'role' => \App\Http\Middleware\Role::class,
+            'block' => \App\Http\Middleware\UserAuth::class,
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

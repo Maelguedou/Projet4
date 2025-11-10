@@ -19,12 +19,17 @@ class Demande extends Model
         'date_demande',
         'statut',
         'user_id',
+        'time'
     ];
 
     protected $dates = [
         'date_demande',
         'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'type' => 'array', // Laravel convertira JSON ↔ tableau automatiquement
     ];
 
     public function user()  {

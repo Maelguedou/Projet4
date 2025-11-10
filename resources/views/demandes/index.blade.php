@@ -30,7 +30,8 @@
                 <tbody class="divide-y divide-gary-200 dark:divide-gray-700">
                     @forelse ($demandes as $demande)
                         <tr>
-                            <td class="px-6 py-4">{{ $demande->type }}</td>
+                            {{-- implode est utilisé pour afficher convenablement type qui est un tableau --}}
+                            <td>{{ implode(', ', $demande->type ?? []) }}</td>
                             <td class="px-6 py-4">{{ $demande->besoin }}</td>
                             <td class="px-6 py-4">{{ $demande->classe }}</td>
                             <td class="px-6 py-4">{{ $demande->formatted_date }}</td>

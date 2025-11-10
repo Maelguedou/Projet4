@@ -24,7 +24,9 @@ class UserSeeder extends Seeder
             'name' => 'Enseignant',
             'email' => 'enseignant@laravel.com',
             'password' => Hash::make('123456'),
-            'role' => 'enseignant'
+            'role' => 'enseignant',
+            'matricule'=>'20256767',
+            'is_block'=>0
         ]);
     }
     
