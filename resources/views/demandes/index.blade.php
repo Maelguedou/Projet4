@@ -121,7 +121,7 @@
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $demande->date_demande->format('d/m/Y H:i') }}
+                                    {{ $demande->date_demande }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     @if ($demande->statut == 'en_attente')
@@ -153,7 +153,7 @@
                                 {{ ucfirst($demande->type) }} — {{ $demande->classe }}
                             </div>
                             <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                                {{ $demande->date_demande->format('d/m/Y H:i') }}
+                                {{ $demande->date_demande }}
                             </div>
                         </div>
                         <div class="text-sm">
