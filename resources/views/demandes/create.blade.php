@@ -75,7 +75,7 @@
             </div>
 
             <!-- description du besoin (salle uniquement) -->
-                    <div class="mb-8 animate-fade-in-up" id="besoin_salle" style="animation-delay: 0.2s">
+                    <div class="mb-8 animate-fade-in-up hidden" id="besoin_salle" style="animation-delay: 0.2s">
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="salle_b">Détails de la salle</label>
                         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
                             <textarea name="salle_b" id="salle_b"
@@ -141,17 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!element) return;
 
         if (show) {
-            element.classList.remove('hidden');
-            element.offsetHeight;
-            requestAnimationFrame(() => {
-                element.classList.remove('opacity-0', 'scale-95', '-translate-y-2');
-            });
+            element.classList.remove('hidden', 'opacity-0', 'scale-95');
         } else {
-            element.classList.add('opacity-0', 'scale-95');
-            element.addEventListener('transitionend', () => {
-                if (!element.classList.contains('opacity-0')) return;
-                element.classList.add('hidden');
-            }, { once: true });
+            element.classList.add('hidden');
         }
     }
 
@@ -159,16 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const salleChecked = elements.typeSalle.checked;
         const materielChecked = elements.typeMateriel.checked;
 
-        // Animation des sections
+        // affiche section materiel uniquement si materiel coche
         animateElement(elements.besoinSection, materielChecked);
-        animateElement(elements.salleBlock, !materielChecked);
+
+        //afiche section salle seulement si salle coche
+        animateElement(elements.salleBlock, salleChecked);
 
         // Gestion du champ salle
-        if (elements.salleField) {
-            const shouldBeReadonly = salleChecked && !materielChecked;
-            elements.salleField.value = shouldBeReadonly ? 'Rien à préciser' : '';
-            elements.salleField.readOnly = shouldBeReadonly;
-            elements.salleField.classList.toggle('bg-gray-50', shouldBeReadonly);
+        if (salleChecked) {
+            elements.salleField.value = 'Rien à préciser';
+            elements.salleField.readOnly = true;
+            elements.salleField.classList.add('bg-gray-50');
+        } else {
+            elements.salleField.value = '';
+            elements.salleField.readOnly = false;
+            elements.salleField.classList.remove('bg-gray-50');
         }
 
         // Afficher la section "Autre matériel" si la case "autre" est cochée
@@ -187,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const debouncedUpdate = debounce(updateVisibility);
 
-    // Attacher les écouteurs d'événements
+    // écouteurs d'événements
     elements.typeSalle.addEventListener('change', debouncedUpdate);
     elements.typeMateriel.addEventListener('change', debouncedUpdate);
 
@@ -197,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Validation du formulaire
-    if (elements.form) {
+/*     if (elements.form) {
         elements.form.addEventListener('submit', (e) => {
             const isValid = elements.typeSalle.checked || elements.typeMateriel.checked;
             if (!isValid) {
@@ -206,8 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
+ */
     // Initialisation
+    elements.salleBlock.classList.add('hidden');
     updateVisibility();
 });
 </script>
