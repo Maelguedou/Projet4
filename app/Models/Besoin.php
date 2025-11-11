@@ -9,6 +9,8 @@ class Besoin extends Model
 {
     use HasFactory;
 
+    protected $table = 'besoins';
+
     protected $fillable = [
         'demande_id',
         'projecteur',
@@ -26,5 +28,17 @@ class Besoin extends Model
     public function demande()
     {
         return $this->belongsTo(Demande::class, 'demande_id');
+    }
+
+    public function getListeBesoinsAttribute()
+    {
+        $besoins = [];
+
+        if ($this->projecteur) $besoins[] = 'Projecteur';
+        if ($this->ordinateur) $besoins[] = 'Ordinateur';
+        if ($this->haut_parleur) $besoins[] = 'Haut-parleur';
+        if (!empty($this->autre)) $besoins[] = $this->autre;
+
+        return !empty($besoins) ? implode(', ', $besoins) : 'Aucun';
     }
 }

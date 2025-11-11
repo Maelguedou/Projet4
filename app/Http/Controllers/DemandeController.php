@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Besoin;
 use App\Models\Demande;
 use App\Models\Enseignant;
 use App\Models\Materiel;
@@ -17,7 +18,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::with('besoin')->where('user_id', Auth::id())->orderByDesc('date_demande')->get();
+        $demandes = Demande::with('besoin')->where('user_id', Auth::id())->orderByDesc('date_demande')->latest()->get();
 
         return view('demandes.index', compact('demandes'));
     }
@@ -45,34 +46,26 @@ class DemandeController extends Controller
             'autre_materiel' => 'nullable|string',
         ]);
 
-        $besoins = [];
-
-        //création du besoin associé(si marériel choisi)
-        if (in_array('Matériel', $request->type)) {
-            if ($request->has('projecteur')) {
-                $besoins[] = 'Projecteur';
-            }
-            if ($request->has('ordinateur')) {
-                $besoins[] = 'Ordinateur';
-            }
-            if ($request->has('haut_parleur')) {
-                $besoins[] = 'Haut_parleur';
-            }
-            if ($request->filled('autre_materiel')) {
-                $besoins[] = $request->input('autre_materiel');
-            }
-        }
-
-        //dd($besoins);
-
         $demande = Demande::create([
             'type' => implode(', ', $request->type),
             'classe' => $request->classe,
             'user_id' => Auth::id(),
             'statut' => 'en_attente',
             'date_demande' => now(),
-            'besoin' => json_encode($besoins),
         ]);
+
+        //création du besoin associé(si marériel choisi)
+        if (in_array('Matériel', $request->type)) {
+            Besoin::create([
+                'demande_id'   => $demande ->id,
+                'projecteur'   => $request ->has('projecteur'),
+                'ordinateur'   => $request ->has('ordinateur'),
+                'haut_parleur' => $request ->has('haut_parleur'),
+                'autre'        => $request ->input('autre_materiel'),
+
+            ]);
+        }
+        //dd($besoins);
 
         return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }

@@ -108,21 +108,21 @@
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                         @forelse ($demandes as $demande)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-150 animate-fade-in-up delay-{{ $loop->index }}">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{{ ucfirst($demande->type) }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                                    @if ($demande->besoin)
-                                        @php
-                                            $besoins = is_string($demande->besoin)
-                                                ? json_decode($demande->besoin, true)
-                                                : (array) $demande->besoin;
-                                        @endphp
-                                        {{ !empty($besoins) ? implode(', ', $besoins) : 'Aucun' }}
-                                    @else
-                                        Aucun
-                                    @endif
+                                    {{ ucfirst($demande->type) }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">{{ $demande->classe }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $demande->date_demande }}</td>
+
+                                <td class="px-4 py-3 text-gray-700 dark:text-gray-200">
+                                    {{ $demande->besoin?->liste_besoins ?? 'Aucun' }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
+                                    {{ $demande->classe }}
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $demande->date_demande->format('d/m/Y H:i') }}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     @if ($demande->statut == 'en_attente')
                                         <span class="inline-flex items-center px-2 py-1 rounded-full text-yellow-700 bg-yellow-100">🕐 En attente</span>
@@ -149,13 +149,17 @@
                 <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 transition-all duration-200 hover:shadow-lg transform hover:-translate-y-1 animate-fade-in-up delay-{{ $loop->index }}">
                     <div class="flex items-start justify-between">
                         <div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ ucfirst($demande->type) }} — {{ $demande->classe }}</div>
-                            <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">{{ $demande->formatted_date }}</div>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                {{ ucfirst($demande->type) }} — {{ $demande->classe }}
+                            </div>
+                            <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                                {{ $demande->date_demande->format('d/m/Y H:i') }}
+                            </div>
                         </div>
                         <div class="text-sm">
-                            @if ($demande->statut == 'en_attente')
+                            @if ($demande->statut === 'en_attente')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-yellow-700 bg-yellow-100">🕐 En attente</span>
-                            @elseif ($demande->statut == 'acceptee')
+                            @elseif ($demande->statut === 'acceptee')
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-green-700 bg-green-100">✓ Acceptée</span>
                             @else
                                 <span class="inline-flex items-center px-2 py-1 rounded-full text-red-700 bg-red-100">✕ Refusée</span>
@@ -164,18 +168,16 @@
                     </div>
 
                     <div class="mt-3 text-sm text-gray-700 dark:text-gray-200">
-                        @php
-                            $besoinData = is_string($demande->besoin)
-                                ? json_decode($demande->besoin, true)
-                                : (array) $demande->besoin;
-                        @endphp
-                        <strong>Besoin :</strong> {{ !empty($besoinData) ? implode(', ', $besoinData) : 'Aucun' }}
+                        <strong>Besoin :</strong> {{ $demande->besoin?->liste_besoins ?? 'Aucun' }}
                     </div>
                 </div>
             @empty
-                <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 text-center text-gray-500">Aucune demande enregistrée</div>
+                <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 text-center text-gray-500">
+                    Aucune demande enregistrée
+                </div>
             @endforelse
         </div>
+
     </div>
 
 </x-app-layout>

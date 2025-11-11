@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             //$table->enum('type', ['salle', 'materiel']);
             $table->string('type', 70);
-            $table->text('besoin')->nullable();
+            //$table->text('besoin')->nullable();
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->unsignedBigInteger('id_salle')->nullable();
-            $table->foreign('id_salle')->references('id_salle')->on('salles')->onDelete('cascade');
+            $table->foreign(columns: 'id_salle')->references('id_salle')->on('salles')->onDelete('cascade');
             $table->unsignedBigInteger('id_materiel')->nullable();
             $table->foreign('id_materiel')->references('id_materiel')->on('materiels')->onDelete('cascade');
             $table->string('classe');

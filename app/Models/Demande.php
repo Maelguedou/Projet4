@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Demande extends Model
 {
+    use HasFactory;
     protected $table = 'demandes';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -27,7 +29,6 @@ class Demande extends Model
     ];
     protected $casts =[
         'type' => 'array',
-        'besoin' => 'array',
     ];
 
 
@@ -50,10 +51,10 @@ class Demande extends Model
 
     public function besoin()
     {
-        return $this->hasOne(Besoin::class);
+        return $this->hasOne(Besoin::class, 'demande_id');
     }
 
-    public function getFormattedDateAttributes() //format plus lisible de la date
+    public function getFormattedDateAttribute() //format plus lisible de la date
     {
         return $this->date_demande ? $this->date_demande->format('d/m/Y H:i') : null;
     }
