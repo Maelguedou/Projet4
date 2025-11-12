@@ -23,14 +23,14 @@
 
             <!-- Droite : bouton + profil -->
             <div class="flex items-center gap-4">
-                <a href="{{ route('demandes.create') }}"
+<!--                 <a href="{{ route('demandes.create') }}"
                    class="hidden sm:inline-flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 rounded-md text-sm font-medium transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                     </svg>
                     Nouvelle demande
                 </a>
-
+ -->
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-white/20 hover:bg-white/30 focus:outline-none">
