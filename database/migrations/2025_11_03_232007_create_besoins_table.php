@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('projecteur')->default(false);
             $table->boolean('ordinateur')->default(false);
             $table->boolean('haut_parleur')->default(false);
-            $table->boolean('autre')->nullable();
+            $table->text('autre')->nullable();
 
             $table->timestamps();
         });
