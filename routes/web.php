@@ -28,7 +28,10 @@ Route::get('home3', function () {
     return view('Module3/home');
 })->name('home3');
 
-
+/* Route::get('home2', function() {
+    return view('Module2/home');
+})->name('home2');
+ */
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -53,6 +56,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::post("/users/unblock",[AdminController::class,"unblock"])->name("unblock");
     Route::delete('/enseignants/{id}', [AdminController::class, 'destroy'])->name('destroy');
     Route::post('/demandes/assign-salle', [AdminController::class, 'assignSalle'])->name('assignSalle');
+    Route::post('/demandes/assign-materiel', [AdminController::class, 'assignMateriel'])->name('assignMateriel');
     Route::post('/admin/store-salle', [SalleController::class,'store'])->name('sallestore');
     Route::post('/admin/store-materiel', [MaterielController::class,'store'])->name('materielstore');
     Route::get('/admin/create-salle', [SalleController::class,'create'])->name('admin.create-salle');

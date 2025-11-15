@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Demande extends Model
 {
+    use HasFactory;
     protected $table = 'demandes';
-    protected $primaryKey = 'id_demande';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'type',
-        'besoin',
         'matricule_enseignant',
         'admin_id',
         'id_salle',
@@ -19,7 +20,8 @@ class Demande extends Model
         'date_demande',
         'statut',
         'user_id',
-        'time'
+        'time',
+        'start'
     ];
 
     protected $dates = [
@@ -49,7 +51,12 @@ class Demande extends Model
         return $this->belongsTo(Materiel::class, 'id_materiel', 'id_materiel');
     }
 
-    public function getFormattedDateAttributes() //format plus lisible de la date
+    public function besoin()
+    {
+        return $this->hasOne(Besoin::class, 'demande_id');
+    }
+
+    public function getFormattedDateAttribute() //format plus lisible de la date
     {
         return $this->date_demande ? $this->date_demande->format('d/m/Y H:i') : null;
     }

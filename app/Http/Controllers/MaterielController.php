@@ -15,7 +15,7 @@ class MaterielController extends Controller
     {
         $request->validate([
             "nom"=>'required|string|max:255',
-            "numero"=>'rquired|integer',
+            "numero"=>'required|integer',
             "type"=>'required|string|max:255',
             "statut"=>'required|string|max:255',
         ]);

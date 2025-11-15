@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('demandes', function (Blueprint $table) {
-            $table->id('id_demande');
+            $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->json('type')->nullable();
-            $table->string('besoin')->nullable();
+            //$table->enum('type', ['salle', 'materiel']);
+            $table->string('type', 70);
+            //$table->text('besoin')->nullable();
             $table->foreignId('admin_id')->nullable()->constrained('users')->onDelete('set null');
             $table->unsignedBigInteger('id_salle')->nullable();
-            $table->foreign('id_salle')->references('id_salle')->on('salles')->onDelete('restrict');
+            $table->foreign(columns: 'id_salle')->references('id_salle')->on('salles')->onDelete('cascade');
             $table->unsignedBigInteger('id_materiel')->nullable();
             $table->foreign('id_materiel')->references('id_materiel')->on('materiels')->onDelete('restrict');
             $table->string('classe');

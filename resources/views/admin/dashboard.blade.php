@@ -5,7 +5,7 @@
                 <h2 class="text-3xl font-bold text-sky-800">
                     Tableau de bord Administrateur
                 </h2>
-                <p class="text-slate-600 text-sm mt-1">Gestion des enseignants et attribution des salles</p>
+                <p class="text-slate-600 text-sm mt-1">Gestion des enseignants et attribution des ressources</p>
             </div>
             
             <!-- Bouton retour page principale -->
@@ -280,42 +280,175 @@
                 </form>
             </section>
 
+            {{-- Section: Attribution du matériel --}}
+            <section class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-5 border-b border-gray-200">
+                    <h2 class="text-2xl font-semibold text-amber-800 flex items-center gap-3">
+                        <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Attribution du matériel
+                    </h2>
+                    <p class="text-sm text-slate-600 mt-1 ml-10">{{ count($materielneeds) }} besoin(s) de matériel en attente</p>
+                </div>
+
+                <form action="{{ route('assignMateriel') }}" method="POST">
+                    @csrf
+                    <div class="overflow-x-auto">
+                        @if (count($materielneeds) == 0)
+                            <div class="text-center py-16">
+                                <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-slate-600 text-lg">Aucun besoin de matériel pour le moment</p>
+                            </div>
+                        @else
+                            <table class="w-full">
+                                <thead class="bg-slate-50 border-b-2 border-slate-200">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Enseignant</th>
+                                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Matricule</th>
+                                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Classe</th>
+                                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Matériel demandé</th>
+                                        <th class="px-6 py-4 text-left text-sm font-semibold text-slate-700">Attribuer</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    @foreach($materielneeds as $demande)
+                                        @php
+                                            $besoin = $besoins->firstWhere('demande_id', $demande->id);
+                                            $materielsDemandes = [];
+
+                                            if ($besoin) {
+                                                foreach ($besoin->getAttributes() as $key => $value) {
+                                                    if (!in_array($key, ['id','demande_id','created_at','updated_at'])) {
+                                                        if ($value == 1 || ($key == 'autre' && $value != null)) {
+                                                            $materielsDemandes[] = $key === 'autre' ? $value : ucfirst($key);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+
+                                        <tr class="hover:bg-slate-50 transition">
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                                                        <svg class="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                        </svg>
+                                                    </div>
+                                                    <span class="font-medium text-slate-800">{{ $demande->user->name }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 text-slate-600 text-sm font-mono">{{ $demande->user->matricule }}</td>
+                                            <td class="px-6 py-4">
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                                                    {{ $demande->classe }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex flex-wrap gap-2">
+                                                    @foreach($materielsDemandes as $item)
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                                                            {{ $item }}
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <select name="materiel[{{ $demande->id }}]" 
+                                                        required
+                                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition">
+                                                    <option value="">-- Sélectionner un matériel --</option>
+                                                    @foreach ($freemateriels as $freemateriel)
+                                                        <option value="{{ $freemateriel->id_materiel }}">{{ $freemateriel->nom }} {{ $freemateriel->numero }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <div class="px-6 py-4 bg-slate-50 border-t border-slate-200">
+                                <button type="submit" 
+                                        onclick="return confirm('Voulez-vous vraiment attribuer ce matériel ?')"
+                                        class="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg shadow-md transition transform hover:scale-105">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Attribuer le matériel sélectionné
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+                </form>
+            </section>
+
         </div>
     </div>
+
+    {{-- Scripts --}}
+    @push('scripts')
+    <script>
+        // Configuration du token CSRF pour fetch
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        async function blockUser(id) {
+            if (!confirm("Êtes-vous sûr de vouloir bloquer cet enseignant ?")) return;
+
+            try {
+                const response = await fetch('/users/block', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Une erreur est survenue');
+                }
+            } catch (error) {
+                alert('Erreur lors du blocage de l\'utilisateur');
+                console.error('Erreur:', error);
+            }
+        }
+
+        async function unBlockUser(id) {
+            if (!confirm("Confirmer le déblocage de cet enseignant ?")) return;
+
+            try {
+                const response = await fetch('/users/unblock', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Une erreur est survenue');
+                }
+            } catch (error) {
+                alert('Erreur lors du déblocage de l\'utilisateur');
+                console.error('Erreur:', error);
+            }
+        }
+    </script>
+    @endpush
+
 </x-app-layout>
-
-<script>
-    async function blockUser(id) {
-        if (!confirm("Êtes-vous sûr de vouloir bloquer cet enseignant ?")) return;
-
-        try {
-            const response = await axios.post('/users/block', { id });
-
-            if (response.data.status === 'success') {
-                window.location.reload();
-            } else {
-                alert(response.data.message || 'Une erreur est survenue');
-            }
-        } catch (error) {
-            alert('Erreur lors du blocage de l\'utilisateur');
-            console.error(error);
-        }
-    }
-
-    async function unBlockUser(id) {
-        if (!confirm("Confirmer le déblocage de cet enseignant ?")) return;
-
-        try {
-            const response = await axios.post('/users/unblock', { id });
-            
-            if (response.data.status === 'success') {
-                window.location.reload();
-            } else {
-                alert(response.data.message || 'Une erreur est survenue');
-            }
-        } catch (error) {
-            alert('Erreur lors du déblocage de l\'utilisateur');
-            console.error(error);
-        }
-    }
-</script>

@@ -4,16 +4,16 @@ namespace App\Console\Commands;
 
 use App\Models\Demande;
 use Illuminate\Console\Command;
-use App\Models\Salle;
+use App\Models\Materiel;
 use Carbon\Carbon;
-class FreeExpiredSalles extends Command
+class FreeExpiredMateriaux extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'salles:free-expired';
+    protected $signature = 'materiaux:free-expired';
 
     
     /**
@@ -21,7 +21,7 @@ class FreeExpiredSalles extends Command
      *
      * @var string
      */
-    protected $description = 'Libère automatiquement les salles après expiration du temps de cours.';
+    protected $description = 'Libère automatiquement les matériaux après expiration du temps de cours.';
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class FreeExpiredSalles extends Command
     {
         // On récupère toutes les demandes approuvées avec une salle attribuée
         $demandes = Demande::where('statut', 'acceptee')
-            ->whereNotNull('id_salle')
+            ->whereNotNull('id_materiel')
             ->get();
         foreach ($demandes as $demande) {
             //On ignore la demande si elle n'a pas de date_demande enregistrée (moment d’attribution) ou si la durée (time) n’a pas été spécifiée.
@@ -43,16 +43,16 @@ class FreeExpiredSalles extends Command
 
              // Si la durée est écoulée
              if(now()->greaterThanOrEqualTo($expiration)){
-                $salle = Salle::find($demande->id_salle);
-                if ($salle) {
-                    $salle->statut='libre';
-                    $salle->save();
+                $materiel = Materiel::find($demande->id_materiel);
+                if ($materiel) {
+                    $materiel->statut='libre';
+                    $materiel->save();
                 }
 
                 $demande->statut='terminee';
                 $demande->classe=null;
                 $demande->save();
-                $this->info("Salle {$salle->id_salle} libérée (Demande #{$demande->id_demande}).");
+                $this->info("Le matériel {$materiel->id_materiel} libéré (Demande #{$demande->id_demande}).");
              }
 
 

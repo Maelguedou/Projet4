@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Besoin;
 use App\Models\Demande;
 use App\Models\Enseignant;
 use App\Models\Materiel;
@@ -17,7 +18,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::with(['salle', 'materiel', 'user'])->orderByDesc('date_demande')->get();
+        $demandes = Demande::with('besoin')->where('user_id', Auth::id())->orderByDesc('date_demande')->latest()->get();
 
         return view('demandes.index', compact('demandes'));
     }
@@ -38,29 +39,54 @@ class DemandeController extends Controller
      */
     public function store(Request $request)
     {
-        $valids = $request->validate([
+        $request->validate([
+            'time'=> 'required|integer',
             'type' => 'required|array|min:1',
-            'type.*' => 'in:Salle,Matériel',
-            'besoin' => 'nullable|string',
+            'type.*' => 'in:Salle,Materiel',
             'classe' => 'required|string|max:255',
+            'autre_materiel' => 'nullable|string',
+            'start'=>[
+                'required',
+                'date_format:H:i',
+                function($attribute,$value,$fail){
+                    $heure= \Carbon\Carbon::createFromFormat('H:i',$value);
+                    $min   = \Carbon\Carbon::createFromTime(8, 0, 0);
+                    $max   = \Carbon\Carbon::createFromTime(17, 0, 0);
+                    if($heure->lt($min) || $heure->gt($max)){
+                         $fail('L\'heure doit être comprise entre 08:00 et 17:00.');
+                    }                                                                       
+                }
+            ]
+        ],[
+                'heure_debut.required' => 'Vous devez renseigner une heure de début.',
+                'heure_debut.date_format' => 'Le format doit être HH:MM (ex : 14:30).',
+    ]
+    );
+
+
+        $demande = Demande::create([
+            'time'=>$request->input('time'), 
+            'type' => implode(', ', $request->type),
+            'classe' => $request->classe,
+            'user_id' => Auth::id(),
+            'statut' => 'en_attente',
+            'date_demande' => now(),
+            'start' =>$request->input('start')
         ]);
 
-        // $type = implode(', ', $request->input('type')); //peut contenir salle ou matétiel
 
-        if (in_array('Salle', $request->input('type')) && !in_array('Matériel', $request->input('type'))) {
-            $besoin = "Rien à préciser";
-        } else {
-            $besoin = $request->input('besoin') ?: 'Non précisé';
+        //création du besoin associé(si marériel choisi)
+        if (in_array('Materiel', $request->type)) {
+            Besoin::create([
+                'demande_id'   => $demande ->id,
+                'projecteur'   => $request ->has('projecteur'),
+                'ordinateur'   => $request ->has('ordinateur'),
+                'haut_parleur' => $request ->has('haut_parleur'),
+                'autre'        => $request ->input('autre_materiel'),
+
+            ]);
         }
 
-        $valids['type'] = $request->input('type');
-        $valids['time'] = $request->input('time');
-        $valids['besoin'] = $besoin;
-        //$valids['classe'] = $request->claase;
-        $valids['user_id'] = Auth::id();
-        $valids['statut'] = 'en_attente';
-        $valids['date_demande'] = now();
-        Demande::create($valids);
 
         return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }
