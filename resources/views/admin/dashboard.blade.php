@@ -5,7 +5,7 @@
                 <h2 class="text-3xl font-bold text-sky-800">
                     Tableau de bord Administrateur
                 </h2>
-                <p class="text-slate-600 text-sm mt-1">Gestion des enseignants et attribution des ressources</p>
+                <p class="text-slate-600 text-sm mt-1">Gestion des enseignants et attribution des salles</p>
             </div>
             
             <!-- Bouton retour page principale -->
@@ -251,7 +251,7 @@
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4">
-                                                <select name="salles[{{ $salleneed->id_demande }}]" 
+                                                <select name="salles[{{ $salleneed->id }}]" 
                                                         required
                                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition">
                                                     <option value="">-- Sélectionner une salle --</option>
@@ -278,21 +278,7 @@
                         @endif
                     </div>
                 </form>
-            </section>
-
-            {{-- Section: Attribution du matériel --}}
-            <section class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
-                <div class="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-5 border-b border-gray-200">
-                    <h2 class="text-2xl font-semibold text-amber-800 flex items-center gap-3">
-                        <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                        Attribution du matériel
-                    </h2>
-                    <p class="text-sm text-slate-600 mt-1 ml-10">{{ count($materielneeds) }} besoin(s) de matériel en attente</p>
-                </div>
-
-                <form action="{{ route('assignMateriel') }}" method="POST">
+              <form action="{{ route('assignMateriel') }}" method="POST">
                     @csrf
                     <div class="overflow-x-auto">
                         @if (count($materielneeds) == 0)
@@ -384,71 +370,44 @@
                         @endif
                     </div>
                 </form>
-            </section>
 
+            </section>
         </div>
     </div>
-
-    {{-- Scripts --}}
-    @push('scripts')
-    <script>
-        // Configuration du token CSRF pour fetch
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-
-        async function blockUser(id) {
-            if (!confirm("Êtes-vous sûr de vouloir bloquer cet enseignant ?")) return;
-
-            try {
-                const response = await fetch('/users/block', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ id: id })
-                });
-
-                const data = await response.json();
-
-                if (data.status === 'success') {
-                    window.location.reload();
-                } else {
-                    alert(data.message || 'Une erreur est survenue');
-                }
-            } catch (error) {
-                alert('Erreur lors du blocage de l\'utilisateur');
-                console.error('Erreur:', error);
-            }
-        }
-
-        async function unBlockUser(id) {
-            if (!confirm("Confirmer le déblocage de cet enseignant ?")) return;
-
-            try {
-                const response = await fetch('/users/unblock', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ id: id })
-                });
-
-                const data = await response.json();
-
-                if (data.status === 'success') {
-                    window.location.reload();
-                } else {
-                    alert(data.message || 'Une erreur est survenue');
-                }
-            } catch (error) {
-                alert('Erreur lors du déblocage de l\'utilisateur');
-                console.error('Erreur:', error);
-            }
-        }
-    </script>
-    @endpush
-
 </x-app-layout>
+
+<script>
+    async function blockUser(id) {
+        if (!confirm("Êtes-vous sûr de vouloir bloquer cet enseignant ?")) return;
+
+        try {
+            const response = await axios.post('/users/block', { id });
+
+            if (response.data.status === 'success') {
+                window.location.reload();
+            } else {
+                alert(response.data.message || 'Une erreur est survenue');
+            }
+        } catch (error) {
+            alert('Erreur lors du blocage de l\'utilisateur');
+            console.error(error);
+        }
+    }
+
+    async function unBlockUser(id) {
+        if (!confirm("Confirmer le déblocage de cet enseignant ?")) return;
+
+        try {
+            const response = await axios.post('/users/unblock', { id });
+            
+            if (response.data.status === 'success') {
+                window.location.reload();
+            } else {
+                alert(response.data.message || 'Une erreur est survenue');
+            }
+        } catch (error) {
+            alert('Erreur lors du déblocage de l\'utilisateur');
+            console.error(error);
+        }
+    }
+</script>
