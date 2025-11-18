@@ -1,4 +1,4 @@
- <x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Créer une demande
@@ -19,7 +19,7 @@
                                 <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Salle</span>
                             </label>
                             <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-green-200 transition-all duration-200">
-                                <input type="checkbox" id="type_materiel" name="type[]" value="Matériel" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-sky-500 transition-colors">
+                                <input type="checkbox" id="type_materiel" name="type[]" value="Materiel" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-sky-500 transition-colors">
                                 <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Matériel</span>
                             </label>
                         </div>
@@ -59,7 +59,7 @@
                         </label>
                     </div>
 
-                    <!-- Section "Autre" qui s’affiche uniquement si cochée -->
+                    <!-- Section "Autre" qui s'affiche uniquement si cochée -->
                     <div id="autre-section"
                         class="mt-4 opacity-0 hidden transform -translate-y-2 transition-all duration-300 ease-out">
                         <label for="autre_materiel"
@@ -88,11 +88,50 @@
                     <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.3s">
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="classe">Classe concernée</label>
                         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                            <input type="text" name="classe" id="classe"
+                            <input type="text" name="classe" id="classe" value="{{ old('classe') }}"
                                    class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
-                                          focus:ring-green-500 focus:border-emerald-500 transition-all duration-200 hover:border-green-300"
+                                          focus:ring-green-500 focus:border-emerald-500 transition-all duration-200 hover:border-green-300
+                                          @error('classe') border-red-500 @enderror"
                                    required placeholder="Ex: GL2">
-                            <p class="mt-2 text-sm text-gray-500">Indiquez la classe pour laquelle vous faites la demande</p>
+                            @error('classe')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @else
+                                <p class="mt-2 text-sm text-gray-500">Indiquez la classe pour laquelle vous faites la demande</p>
+                            @enderror
+                        </div>
+                    </div>
+
+            {{-- la durée du cours --}}
+                    <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.4s">
+                        <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="time">Durée du cours</label>
+                        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                            <input type="text" name="time" id="time" value="{{ old('time') }}"
+                                   class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
+                                          focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300
+                                          @error('time') border-red-500 @enderror"
+                                   required placeholder="Ex: 2h, 1h30">
+                            @error('time')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @else
+                                <p class="mt-2 text-sm text-gray-500">Indiquez la durée prévue du cours</p>
+                            @enderror
+                        </div>
+                    </div>
+
+            {{-- L'heure du cours --}}
+                    <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.5s">
+                        <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="start">Heure du cours</label>
+                        <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                            <input type="time" name="start" id="start" value="{{ old('start') }}"
+                                   class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
+                                          focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300
+                                          @error('start') border-red-500 @enderror"
+                                   required>
+                            @error('start')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @else
+                                <p class="mt-2 text-sm text-gray-500">Sélectionnez l'heure de début du cours</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -111,9 +150,10 @@
                             </svg>
                             Soumettre la demande
                         </button>
+
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -193,17 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.autreCheckbox.addEventListener('change', debouncedUpdate);
     }
 
-    // Validation du formulaire
-/*     if (elements.form) {
-        elements.form.addEventListener('submit', (e) => {
-            const isValid = elements.typeSalle.checked || elements.typeMateriel.checked;
-            if (!isValid) {
-                e.preventDefault();
-                alert('Veuillez sélectionner au moins un type de demande (Salle ou Matériel)');
-            }
-        });
-    }
- */
     // Initialisation
     elements.salleBlock.classList.add('hidden');
     updateVisibility();

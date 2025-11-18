@@ -24,7 +24,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Authentifie l'utilisateur
         $request->authenticate();
+
+        // Récupère l'utilisateur authentifié
+        $user = Auth::user();
+
+         // Vérifie s'il est bloqué
+        if ($user->is_block) {
+            Auth::logout();
+            return back()->with('error', 'Votre compte a été bloqué. Contactez l’administrateur.');
+        }
+
 
         $request->session()->regenerate();
 
@@ -32,6 +43,7 @@ class AuthenticatedSessionController extends Controller
         if($request->user()->role=="admin"){
             $url= "admin/dashboard";
         }else if($request->user()->role == "agent"){
+            
             $url= "agent/dashboard";
         }
         return redirect()->intended($url);

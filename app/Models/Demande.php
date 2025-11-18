@@ -20,6 +20,8 @@ class Demande extends Model
         'date_demande',
         'statut',
         'user_id',
+        'time',
+        'start'
     ];
 
     protected $dates = [
@@ -27,10 +29,10 @@ class Demande extends Model
         'created_at',
         'updated_at'
     ];
-    protected $casts =[
-        'type' => 'array',
-    ];
 
+    protected $casts = [
+        'type' => 'array', // Laravel convertira JSON ↔ tableau automatiquement
+    ];
 
     public function user()  {
         return $this->belongsTo(User::class, 'user_id');

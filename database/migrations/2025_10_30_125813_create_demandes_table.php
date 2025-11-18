@@ -21,10 +21,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_salle')->nullable();
             $table->foreign(columns: 'id_salle')->references('id_salle')->on('salles')->onDelete('cascade');
             $table->unsignedBigInteger('id_materiel')->nullable();
-            $table->foreign('id_materiel')->references('id_materiel')->on('materiels')->onDelete('cascade');
+            $table->foreign('id_materiel')->references('id_materiel')->on('materiels')->onDelete('restrict');
             $table->string('classe');
             $table->timestamp('date_demande');
-            $table->enum('statut', ['en_attente', 'acceptee', 'refusee'])->default('en_attente');
+            $table->enum('statut', ['en_attente', 'acceptee', 'refusee','terminee'])->default('en_attente');
             $table->timestamps();
         });
     }

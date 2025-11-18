@@ -40,22 +40,43 @@ class DemandeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'time'=> 'required|integer',
             'type' => 'required|array|min:1',
-            'type.*' => 'in:Salle,Matériel',
+            'type.*' => 'in:Salle,Materiel',
             'classe' => 'required|string|max:255',
             'autre_materiel' => 'nullable|string',
-        ]);
+            'start'=>[
+                'required',
+                'date_format:H:i',
+                function($attribute,$value,$fail){
+                    $heure= \Carbon\Carbon::createFromFormat('H:i',$value);
+                    $min   = \Carbon\Carbon::createFromTime(8, 0, 0);
+                    $max   = \Carbon\Carbon::createFromTime(17, 0, 0);
+                    if($heure->lt($min) || $heure->gt($max)){
+                         $fail('L\'heure doit être comprise entre 08:00 et 17:00.');
+                    }                                                                       
+                }
+            ]
+        ],[
+                'heure_debut.required' => 'Vous devez renseigner une heure de début.',
+                'heure_debut.date_format' => 'Le format doit être HH:MM (ex : 14:30).',
+    ]
+    );
+
 
         $demande = Demande::create([
+            'time'=>$request->input('time'), 
             'type' => implode(', ', $request->type),
             'classe' => $request->classe,
             'user_id' => Auth::id(),
             'statut' => 'en_attente',
             'date_demande' => now(),
+            'start' =>$request->input('start')
         ]);
 
+
         //création du besoin associé(si marériel choisi)
-        if (in_array('Matériel', $request->type)) {
+        if (in_array('Materiel', $request->type)) {
             Besoin::create([
                 'demande_id'   => $demande ->id,
                 'projecteur'   => $request ->has('projecteur'),
@@ -65,7 +86,7 @@ class DemandeController extends Controller
 
             ]);
         }
-        //dd($besoins);
+
 
         return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
     }
