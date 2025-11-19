@@ -15,16 +15,10 @@ use App\Http\Controllers\EnseignantController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    // Route::get('register', [RegisteredUserController::class, 'create'])
-    //     ->name('register');
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
 
-    // Route::post('register', [RegisteredUserController::class, 'store']);
-
-    // Route::get('/register-admin', [AdminRegisterController::class, 'create'])->name('register.admin');
-    // Route::post('/register-admin', [AdminRegisterController::class, 'store']);
-
-    // Route::get('/register-agent', [EnseignantRegisterController::class, 'create'])->name('register.enseignant');
-    // Route::post('/register-agent', [EnseignantRegisterController::class, 'store']);
+    Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

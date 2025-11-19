@@ -1,183 +1,221 @@
 <x-app-layout>
-    <style>
-/*         @keyframes fade-in-slide {
-            0% {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fade-in-up {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-in-slide {
-            animation: fade-in-slide 0.5s ease-out forwards;
-        }
-
-        .animate-fade-in-up {
-            opacity: 0;
-            animation: fade-in-up 0.5s ease-out forwards;
-        }
-
-        .delay-0 { animation-delay: 0s; }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
- */        .delay-5 { animation-delay: 0.5s; }
-        .delay-6 { animation-delay: 0.6s; }
-        .delay-7 { animation-delay: 0.7s; }
-        .delay-8 { animation-delay: 0.8s; }
-        .delay-9 { animation-delay: 0.9s; }
-
-/*         @media (prefers-reduced-motion: reduce) {
-            .animate-fade-in-slide,
-            .animate-fade-in-up {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-        }
- */
-    </style>
-
     <x-slot name="header">
-        <div class="modern-header">
-            <div class="modern-header-pattern"></div>
-            <div class="header-content">
-                <div class="animate-fade-in">
-                    <h2 class="header-title">
-                        {{ __('Mes demandes de réservations') }}
-                    </h2>
-                    <p class="header-subtitle">
-                        Consultez et gérez vos demandes de réservation en cours
-                    </p>
-                </div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-bold text-sky-800">
+                    {{ __('Mes demandes de réservations') }}
+                </h2>
+                <p class="text-slate-600 text-sm mt-1">Consultez et gérez vos demandes de réservation en cours</p>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        @if (session('success'))
-            <div class="mb-4 p-4 bg-[#0E8345] hover:bg-[#15803D] border border-green-200 text-[#0E8345] rounded-lg shadow-sm animate-fade-in-slide">
-                {{ session('success') }}
-            </div>
-        @endif
+    <div class="py-12 bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-4">
-                <a href="{{ route('enseignant.dashboard') }}" class="text-sm text-gray-600 hover:underline">
-                    ← Retour
-                </a>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Mes demandes de réservations</h3>
-            </div>
+            {{-- Message de succès --}}
+            @if (session('success'))
+                <div class="mb-6 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 border-l-4 border-emerald-500 text-emerald-800 rounded-lg shadow-md animate-fade-in flex items-center gap-3">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="font-medium">{{ session('success') }}</span>
+                </div>
+            @endif
 
-            <div class="flex items-center gap-3">
-                <a href="{{ route('demandes.create') }}" class="inline-flex items-center gap-2 bg-[#0E8345] hover:bg-[#15803D] text-white px-4 py-2 rounded-md shadow-sm text-sm transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-md active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+            {{-- En-tête avec boutons --}}
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('enseignant.dashboard') }}" 
+                       class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-sky-700 transition-colors font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Retour au tableau de bord
+                    </a>
+                </div>
+
+                <a href="{{ route('demandes.create') }}" 
+                   class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg transform hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
                     Nouvelle demande
                 </a>
             </div>
-        </div>
 
-        <!-- Desktop table -->
-        <div class="hidden sm:block bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50 dark:bg-gray-700">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Besoin</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Classe</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200">
-                        @forelse ($demandes as $demande)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-150 animate-fade-in-up delay-{{ $loop->index }}">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                                    {{ ucfirst($demande->type) }}
-                                </td>
-
-                                <td class="px-4 py-3 text-gray-700 dark:text-gray-200">
-                                    {{ $demande->besoin?->liste_besoins ?? 'Aucun' }}
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                                    {{ $demande->classe }}
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $demande->date_demande }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    @if ($demande->statut == 'en_attente')
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-yellow-700 bg-yellow-100">🕐 En attente</span>
-                                    @elseif ($demande->statut == 'acceptee')
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-green-700 bg-green-100">✓ Acceptée</span>
-                                    @else
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-red-700 bg-red-100">✕ Refusée</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @empty
+            {{-- Tableau Desktop --}}
+            <div class="hidden sm:block bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gradient-to-r from-sky-50 to-blue-50">
                             <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-gray-500">Aucune demande enregistrée</td>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-sky-800 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-sky-800 uppercase tracking-wider">Besoin</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-sky-800 uppercase tracking-wider">Classe</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-sky-800 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-sky-800 uppercase tracking-wider">Statut</th>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @forelse ($demandes as $demande)
+                                <tr class="hover:bg-sky-50 transition-all duration-200 animate-fade-in-up" style="animation-delay: {{ $loop->index * 0.1 }}s">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            @if ($demande->type === 'Salle')
+                                                <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                                    </svg>
+                                                </div>
+                                            @else
+                                                <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            <span class="text-sm font-semibold text-gray-800">{{ ucfirst($demande->type) }}</span>
+                                        </div>
+                                    </td>
 
-        <!-- Mobile cards -->
-        <div class="sm:hidden space-y-4">
-            @forelse ($demandes as $demande)
-                <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 transition-all duration-200 hover:shadow-lg transform hover:-translate-y-1 animate-fade-in-up delay-{{ $loop->index }}">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                                {{ ucfirst($demande->type) }} — {{ $demande->classe }}
+                                    <td class="px-6 py-4 text-sm text-gray-700">
+                                        <div class="max-w-xs truncate">
+                                            {{ $demande->besoin?->liste_besoins ?? 'Aucun' }}
+                                        </div>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                                            {{ $demande->classe }}
+                                        </span>
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        {{ $demande->date_demande }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if ($demande->statut == 'en_attente')
+                                            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700 border border-yellow-200">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                                </svg>
+                                                En attente
+                                            </span>
+                                        @elseif ($demande->statut == 'acceptee')
+                                            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                </svg>
+                                                Acceptée
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                                </svg>
+                                                Refusée
+                                            </span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-16 text-center">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                            <p class="text-gray-600 text-lg font-medium">Aucune demande enregistrée</p>
+                                            <p class="text-gray-500 text-sm mt-1">Créez votre première demande pour commencer</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{-- Cartes Mobile --}}
+            <div class="sm:hidden space-y-4">
+                @forelse ($demandes as $demande)
+                    <div class="bg-white rounded-xl shadow-lg p-5 border border-gray-200 transition-all duration-200 hover:shadow-xl transform hover:-translate-y-1 animate-fade-in-up" style="animation-delay: {{ $loop->index * 0.1 }}s">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                @if ($demande->type === 'Salle')
+                                    <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                    </div>
+                                @else
+                                    <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                @endif
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">
+                                        {{ ucfirst($demande->type) }}
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-0.5">
+                                        {{ $demande->date_demande }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                                {{ $demande->date_demande }}
-                            </div>
-                        </div>
-                        <div class="text-sm">
+
                             @if ($demande->statut === 'en_attente')
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-yellow-700 bg-yellow-100">🕐 En attente</span>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    En attente
+                                </span>
                             @elseif ($demande->statut === 'acceptee')
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-green-700 bg-green-100">✓ Acceptée</span>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Acceptée
+                                </span>
                             @else
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-red-700 bg-red-100">✕ Refusée</span>
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Refusée
+                                </span>
                             @endif
                         </div>
-                    </div>
 
-                    <div class="mt-3 text-sm text-gray-700 dark:text-gray-200">
-                        <strong>Besoin :</strong> {{ $demande->besoin?->liste_besoins ?? 'Aucun' }}
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-medium text-gray-500">Classe:</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                                    {{ $demande->classe }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-xs font-medium text-gray-500">Besoin:</span>
+                                <span class="text-sm text-gray-700 ml-2">{{ $demande->besoin?->liste_besoins ?? 'Aucun' }}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            @empty
-                <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 text-center text-gray-500">
-                    Aucune demande enregistrée
-                </div>
-            @endforelse
+                @empty
+                    <div class="bg-white rounded-xl shadow-lg p-8 text-center border border-gray-200">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <p class="text-gray-600 font-medium">Aucune demande enregistrée</p>
+                        <p class="text-gray-500 text-sm mt-1">Créez votre première demande</p>
+                    </div>
+                @endforelse
+            </div>
+
         </div>
-
     </div>
 
 </x-app-layout>

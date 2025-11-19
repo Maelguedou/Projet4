@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Materiel;
+use App\Models\Demande;
 use App\Models\Salle;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class SalleController extends Controller
         // return view("Module2/home");
         $salles = Salle::with('demandes')->orderBy("created_at","desc")->get();
         $materiels=Materiel::orderBy("created_at","desc")->get();
-        return view("Module2/home", compact("salles","materiels"));
+        $demandes=Demande::all();
+        return view("Module2/home", compact("salles","materiels","demandes"));
     }
     public function create()
     {

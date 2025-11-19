@@ -26,7 +26,17 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456'),
             'role' => 'enseignant',
             'matricule'=>'20256767',
+            'phone' => '0601020304',
             'is_block'=>0
+        ]);
+
+        User::create([
+            'name' => 'Alice Bernard',
+            'email' => 'alice.bernard@campus.com',
+            'password' => Hash::make('password'),
+            'role' => 'etudiant',
+            'matricule' => '001',
+            'phone' => '0601020306',
         ]);
     }
     

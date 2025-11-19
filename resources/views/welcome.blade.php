@@ -104,47 +104,49 @@
             </a>
 
             <!-- Carte 2 : Projets étudiants -->
-            <div class="group relative">
-                <div class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                    <!-- Image avec overlay -->
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="{{ asset('images/vitaly-gariev-kp7qkHTgSKc-unsplash.jpg') }}" 
-                             alt="Projets étudiants" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                        
-                        <!-- Badge -->
-                   
-                    </div>
+            <a href="{{ route('dashboard3') }}" class="group relative">
+                <div class="group relative">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                        <!-- Image avec overlay -->
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="{{ asset('images/vitaly-gariev-kp7qkHTgSKc-unsplash.jpg') }}" 
+                                alt="Projets étudiants" 
+                                class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                            
+                            <!-- Badge -->
                     
-                    <!-- Contenu -->
-                    <div class="p-8">
-                        <div class="flex items-start gap-4">
-                            <div class="bg-amber-100 p-3 rounded-xl">
-                                <svg class="w-8 h-8 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-bold text-amber-800 mb-2">
-                                    Gestion de projets étudiants
-                                </h3>
-                                <p class="text-slate-600 leading-relaxed">
-                                    Suivez vos projets académiques, collaborez avec vos enseignants et soumettez vos travaux en ligne.
-                                </p>
-                            </div>
                         </div>
                         
-                        <!-- Call to action désactivé -->
-                        <div class="mt-6 flex items-center text-slate-400 font-semibold gap-2">
-                            <span>Module en développement</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
+                        <!-- Contenu -->
+                        <div class="p-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-amber-100 p-3 rounded-xl">
+                                    <svg class="w-8 h-8 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-bold text-amber-800 mb-2">
+                                        Gestion de projets étudiants
+                                    </h3>
+                                    <p class="text-slate-600 leading-relaxed">
+                                        Suivez vos projets académiques, collaborez avec vos enseignants et soumettez vos travaux en ligne.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Call to action désactivé -->
+                            <div class="mt-6 flex items-center text-amber-700 font-semibold gap-2">
+                                <span>Accedez au module</span>
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>    
 
         </div>
     </section>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Besoin;
 use App\Models\Demande;
@@ -39,56 +39,93 @@ class DemandeController extends Controller
      */
     public function store(Request $request)
     {
+        $ref = now()->format('ymd') . str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $request->validate([
             'time'=> 'required|integer',
             'type' => 'required|array|min:1',
             'type.*' => 'in:Salle,Materiel',
             'classe' => 'required|string|max:255',
             'autre_materiel' => 'nullable|string',
-            'start'=>[
-                'required',
-                'date_format:H:i',
-                function($attribute,$value,$fail){
-                    $heure= \Carbon\Carbon::createFromFormat('H:i',$value);
-                    $min   = \Carbon\Carbon::createFromTime(8, 0, 0);
-                    $max   = \Carbon\Carbon::createFromTime(17, 0, 0);
-                    if($heure->lt($min) || $heure->gt($max)){
-                         $fail('L\'heure doit être comprise entre 08:00 et 17:00.');
-                    }                                                                       
-                }
-            ]
-        ],[
-                'heure_debut.required' => 'Vous devez renseigner une heure de début.',
-                'heure_debut.date_format' => 'Le format doit être HH:MM (ex : 14:30).',
-    ]
+            'start'=>'required|date_format:Y-m-d\TH:i'
+        ]
     );
 
 
-        $demande = Demande::create([
+        $columnMap = [
+        'Projecteur'   => 'projecteur',
+        'Ordinateur'   => 'ordinateur',
+        'Haut-parleur' => 'haut_parleur',
+         ];
+
+        DB::beginTransaction();
+
+        //Demande Salle (une seule ligne si demandée)
+        if(in_array('Salle',$request->type)){
+            $demande = Demande::create([
             'time'=>$request->input('time'), 
-            'type' => implode(', ', $request->type),
+            'type' => 'Salle',
             'classe' => $request->classe,
             'user_id' => Auth::id(),
             'statut' => 'en_attente',
             'date_demande' => now(),
-            'start' =>$request->input('start')
-        ]);
+            'start' =>$request->input('start'),
+            'ref'=>$ref
+         ]);
 
+        }
+        // 2) Demandes Matériel : une demande par matériel sélectionné
+        if(in_array('Materiel',$request->type)){
+                $materiels = $request->input('materiels', []);
 
-        //création du besoin associé(si marériel choisi)
-        if (in_array('Materiel', $request->type)) {
-            Besoin::create([
-                'demande_id'   => $demande ->id,
-                'projecteur'   => $request ->has('projecteur'),
-                'ordinateur'   => $request ->has('ordinateur'),
-                'haut_parleur' => $request ->has('haut_parleur'),
-                'autre'        => $request ->input('autre_materiel'),
+                 // remplacer 'Autre' par le texte si présent
+                if (($key = array_search('Autre', $materiels)) !== false) {
+                $autreText = trim($request->input('autre_materiel', ''));
+               
+                // si texte vide, garde 'Autre' sinon remplace par le texte
+                $materiels[$key] = $autreText !== '' ? $autreText : 'Autre';    
+                }
+            foreach($materiels as $materiel){
+                $demande=Demande::create([
+                        'time'=>$request->input('time'), 
+                        'type' =>'Materiel',
+                        'classe' => $request->classe,
+                        'user_id' => Auth::id(),
+                        'statut' => 'en_attente',
+                        'date_demande' => now(),
+                        'start' =>$request->input('start'),
+                        'ref'=>$ref,
+                ]);
+                // initialise toutes les colonnes booléennes à 0
+                $besoinData = [
+                    'demande_id' => $demande->id,
+                    // initialise explicitement les colonnes existantes
+                    'projecteur' => 0,
+                    'ordinateur' => 0,
+                    'haut_parleur' => 0,
+                    'autre' => null,
+                ];
 
-            ]);
+                // Si le matérial correspond à une colonne connue, active-la
+                $foundColumn = false;
+                foreach ($columnMap as $label => $col) {
+                    if (strcasecmp($materiel, $label) === 0) {
+                        $besoinData[$col] = 1;
+                        $foundColumn = true;
+                        break;
+                    }
+                }
+
+                // Si c'est un texte libre (autre), on remplit la colonne 'autre'
+                if (!$foundColumn) {
+                    // si tu as une colonne bool 'autre' + une colonne texte 'autre_text', adapte ici
+                    $besoinData['autre'] = $materiel;
+                }
+                Besoin::create($besoinData);
+            }    
         }
 
-
-        return redirect()->route('demandes.index')->with('success', 'Demande envoyée avec succès.');
+        DB::commit();
+        return redirect()->route('demandes.index')->with('success', 'Demande(s) créée(s) avec succès.');
     }
 
     /**

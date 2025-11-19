@@ -9,8 +9,9 @@
 <body class="bg-gradient-to-br from-slate-50 via-sky-50 to-slate-50 min-h-screen">
 
   {{-- HEADER MODERNE --}}
-  <header class="page-header sticky top-0 z-50">
-    <div class="page-header-content">
+  <header class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
       {{-- Barre principale --}}
       <div class="py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
         
@@ -33,6 +34,10 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
             </svg>
             Espace Enseignant
+          </a>
+          <a href="{{ route('welcome') }}" 
+             class="inline-flex items-center gap-2 bg-white hover:bg-sky-800 text-black text-sm font-medium px-5 py-2.5 rounded-lg shadow-md transition transform hover:scale-105">
+            Portail
           </a>
         </div>
       </div>
@@ -143,16 +148,14 @@
                   {{ $salle->nom }}
                 </h4>
 
-                @php
-                    // On récupère la première demande de la salle avec une classe non vide
-                    $demandeAvecClasse = $salle->demandes->firstWhere('classe', '!=', null);
-                @endphp
+                @foreach ($demandes as $demande )
+                  @if ($demande->id_salle==$salle->id_salle && $salle->statut==='occupee')
+                      <p class="text-sm text-green-700 font-semibold">
+                        Salle occupée par la classe : {{ $demande->classe}}
+                      </p>
+                  @endif
+                @endforeach
 
-                @if ($demandeAvecClasse)
-                    <p class="text-sm text-green-700 font-semibold">
-                        Salle occupée par la classe : {{ $demandeAvecClasse->classe }}
-                    </p>
-                @endif
                 <div class="flex items-center gap-2 text-slate-600">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -230,6 +233,13 @@
                 <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-700 transition-colors">
                   {{ $materiel->nom }} {{ $materiel->numero }}
                 </h4>
+                  @foreach ($demandes as $demande )
+                  @if ($demande->id_materiel==$materiel->id_materiel && $materiel->statut==='occupee')
+                      <p class="text-sm text-green-700 font-semibold">
+                        Materiel occupé par la classe : {{ $demande->classe}}
+                      </p>
+                  @endif
+                @endforeach
                 <div class="flex items-center gap-2 text-slate-600">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
@@ -261,9 +271,9 @@
         <div>
           <h4 class="font-bold text-lg mb-3">Liens rapides</h4>
           <ul class="space-y-2 text-sm text-sky-200">
-            <li><a href="#" class="hover:text-white transition">Accueil</a></li>
-            <li><a href="#" class="hover:text-white transition">À propos</a></li>
-            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition"></a></li>
+            <li><a href="#" class="hover:text-white transition"></a></li>
+            <li><a href="#" class="hover:text-white transition"></a></li>
           </ul>
         </div>
 

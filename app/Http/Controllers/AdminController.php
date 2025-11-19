@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Attribution;
 use App\Models\Demande;
 use DB;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    use AuthorizesRequests;
     public function dashboard()
     {
         $users = User::where("role","=","enseignant")->get();
@@ -31,7 +33,7 @@ class AdminController extends Controller
         $freemateriels=Materiel::where('statut','=','libre')->get();
 
         
-        return view("admin/dashboard", compact("users","salleneeds","freesalles","materielneeds","freemateriels","besoins"));
+        return view("admin.dashboard", compact("users","salleneeds","freesalles","materielneeds","freemateriels","besoins"));
     }
 
     public function Create(){
@@ -87,70 +89,56 @@ class AdminController extends Controller
     }
 
     //Fonction pour valider l'attribution de salles
-    public function assignSalle(Request $request)
-    {
-        //les salles choisies
-        $Salles=$request->input('salles');
+ public function assignSalle(Request $request)
+{
+   
+    // On récupère seulement la ligne envoyée
+    $needId = $request->input('need_id');
+    $salleId = $request->input('salle_id');
 
-        //Verifier que les salles voulant être attribuer sont distinctes
-
-        $salleIds = array_values($Salles);// on récupère uniquement les valeurs
-        if(count($salleIds) !== count(array_unique($salleIds))) {
-            return back()->withErrors(['message'=>'Une même salle a été sélectionnée plusieurs fois.']);
-        }
-
-        foreach($Salles as $demandeId => $salleId) {
-            $demande=Demande::find($demandeId);
-            $salle=Salle::find($salleId);
-            if ($demande && $salle && $salle->statut=='libre') {
-                //Attribuer la salle
-                $demande->id_salle=$salle->id_salle;
-                $demande->admin_id= Auth::id();
-                $demande->statut= 'acceptee';
-                $demande->date_demande = now(); // moment de l’approbation
-                $demande->save();
-                //Marquer la salle comme occupée
-                $salle->statut= 'occupee';
-                $salle->save();
-            }
-        }
-        return redirect()->back()->with('success', 'Salles attribuées avec succès !');
+    // Vérifier que les deux champs existent
+    if (!$needId || !$salleId) {
+        return back()->with('error', 'Informations manquantes.');
     }
+
+    $need = Demande::findOrFail($needId);
+    $salle=Salle::findOrFail($salleId);
+    // On affecte la salle
+    $need->id_salle = $salleId;
+    $need->statut = 'acceptee';
+    $need->date_demande=now();
+    $need->admin_id = Auth::id();
+    $need->save();
+    return back()->with('success', 'Salle attribuée avec succès.');
+}
+
 
     //Fonction pour valider l'attribution d'un materiel
-    public function assignMateriel(Request $request)
-    {
-    
-        //les salles choisies
-        $materiels=$request->input('materiel');
-        
-        //Verifier que les salles voulant être attribuer sont distinctes
-       
-        $materielIds = array_values($materiels);// on récupère uniquement les valeurs
-        if(count($materielIds) !== count(array_unique($materielIds))) {
-            return back()->withErrors(['message'=>'Un même matériel a été sélectionné plusieurs fois.']);
-           
-        }
-
-        foreach($materiels as $demandeId => $materielId) {
-            $demande=Demande::find($demandeId);
-            $materiel=Materiel::find($materielId);
-           
-            if ($demande && $materiel && $materiel->statut=='libre') {
-                //Attribuer la salle
-                $demande->id_materiel=$materiel->id_materiel;
-                $demande->admin_id= Auth::id();
-                $demande->statut= 'acceptee';
-                
-                $demande->date_demande = now(); // moment de l’approbation
-                $demande->save();
-                //Marquer la salle comme occupée
-                $materiel->statut= 'occupee';
-                $materiel->save();
-            }
-        }
-        return redirect()->back()->with('success', 'Matériaux attribués avec succès !');
+ public function assignMateriel(Request $request)
+{
+   
+    // On récupère seulement la ligne envoyée
+    $needId = $request->input('Mneed_id');
+    $materielId = $request->input('materiel_id');
+ 
+    // Vérifier que les deux champs existent
+    if (!$needId || !$materielId ) {
+        return back()->with('error', 'Informations manquantes.');
     }
+
+    $need = Demande::findOrFail($needId);
+    $materiel=Materiel::findOrFail($materielId);
+  
+    // On affecte la salle
+    $need->id_materiel = $materielId ;
+    $need->statut = 'acceptee';
+    $need->date_demande=now();
+    $need->admin_id = Auth::id();
+    $need->save();
+
+    return back()->with('success', 'Matériel attribué.');
+}
+
     
 
     //Fonction pour supprimé un enseignant
@@ -159,5 +147,16 @@ class AdminController extends Controller
         $user=User::findOrFail($id);
         $user->delete();
         return redirect()->back()->with('success','Enseignant supprimé');
+    }
+
+    //Fonction pour rejeter une demande
+    public function rejectDemande(Request $request, $id)
+    {
+        $demande = Demande::findOrFail($id);
+        $demande->statut = 'refusee';
+        $demande->admin_id = Auth::id();
+        $demande->save();
+
+        return redirect()->back()->with('success', 'Demande rejetée.');
     }
 }

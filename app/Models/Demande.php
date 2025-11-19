@@ -21,7 +21,8 @@ class Demande extends Model
         'statut',
         'user_id',
         'time',
-        'start'
+        'start',
+        'ref'
     ];
 
     protected $dates = [
@@ -31,7 +32,8 @@ class Demande extends Model
     ];
 
     protected $casts = [
-        'type' => 'array', // Laravel convertira JSON ↔ tableau automatiquement
+        'type'  => 'array', 
+        'start' =>'datetime'
     ];
 
     public function user()  {

@@ -15,11 +15,11 @@
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3">Type de demande</label>
                         <div class="flex flex-wrap items-center gap-6 mt-2">
                             <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-green-200 transition-all duration-200">
-                                <input type="checkbox" id="type_salle" name="type[]" value="Salle" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                                <input type="radio" id="type_salle" name="type[]" value="Salle" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
                                 <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Salle</span>
                             </label>
                             <label class="group inline-flex items-center text-sm cursor-pointer p-4 bg-gray-50 rounded-lg border-2 border-transparent hover:border-green-200 transition-all duration-200">
-                                <input type="checkbox" id="type_materiel" name="type[]" value="Materiel" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-sky-500 transition-colors">
+                                <input type="radio" id="type_materiel" name="type[]" value="Materiel" class="h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-sky-500 transition-colors">
                                 <span class="ml-3 font-medium group-hover:text-green-600 transition-colors">Matériel</span>
                             </label>
                         </div>
@@ -32,32 +32,29 @@
                     Matériel nécessaire
                 </label>
 
-                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <div class="space-y-3">
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="projecteur" id="projecteur"
-                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                            <span class="text-gray-700 dark:text-gray-200">Projecteur</span>
-                        </label>
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" name="materiels[]" value="Projecteur" id="projecteur" class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                    <span class="text-gray-700 dark:text-gray-200">Projecteur</span>
+                </label>
 
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="ordinateur" id="ordinateur"
-                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                            <span class="text-gray-700 dark:text-gray-200">Ordinateur</span>
-                        </label>
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" name="materiels[]" value="Ordinateur" id="ordinateur" class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                    <span class="text-gray-700 dark:text-gray-200">Ordinateur</span>
+                </label>
 
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="haut_parleur" id="haut_parleur"
-                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                            <span class="text-gray-700 dark:text-gray-200">Haut-parleur</span>
-                        </label>
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" name="materiels[]" value="Haut-parleur" id="haut_parleur" class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                    <span class="text-gray-700 dark:text-gray-200">Haut-parleur</span>
+                </label>
 
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="autre" id="autre"
-                                class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                            <span class="text-gray-700 dark:text-gray-200">Autre matériel</span>
-                        </label>
-                    </div>
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" name="materiels[]" value="Autre" id="autre" class="text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                    <span class="text-gray-700 dark:text-gray-200">Autre matériel</span>
+                </label>
+
+                <!-- Champ texte pour "autre" -->
+                <input type="text" name="autre_materiel" id="autre_materiel" class="hidden" placeholder="Précisez le matériel">
+
 
                     <!-- Section "Autre" qui s'affiche uniquement si cochée -->
                     <div id="autre-section"
@@ -118,11 +115,11 @@
                         </div>
                     </div>
 
-            {{-- L'heure du cours --}}
+            {{-- date du cours et heure --}}
                     <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.5s">
                         <label class="block text-gray-700 dark:text-gray-200 text-lg font-semibold mb-3" for="start">Heure du cours</label>
                         <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                            <input type="time" name="start" id="start" value="{{ old('start') }}"
+                            <input type="datetime-local" name="start" id="start"
                                    class="block w-full rounded-lg border-gray-300 shadow-sm p-3 bg-white dark:bg-gray-700 dark:text-gray-200
                                           focus:ring-green-500 focus:border-green-500 transition-all duration-200 hover:border-green-300
                                           @error('start') border-red-500 @enderror"

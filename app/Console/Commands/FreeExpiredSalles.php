@@ -29,28 +29,37 @@ class FreeExpiredSalles extends Command
     public function handle()
     {
         // On récupère toutes les demandes approuvées avec une salle attribuée
-        $demandes = Demande::where('statut', 'acceptee')
-            ->whereNotNull('id_salle')
-            ->get();
+        $demandes = Demande::where('statut', 'acceptee')->get();
         foreach ($demandes as $demande) {
-            //On ignore la demande si elle n'a pas de date_demande enregistrée (moment d’attribution) ou si la durée (time) n’a pas été spécifiée.
-             if (!$demande->date_demande || !$demande->time) continue;
-             //On crée un objet date/heure d’expiration.
-            //  $expiration = Carbon::parse($demande->date_demande)->addHours($demande->time);
-           $debut = Carbon::parse($demande->date_demande)
-                ->setTimeFromTimeString($demande->start);
-            $expiration = $debut->copy()->addMinutes($demande->time);
+            //On ignore la demande si elle n'a pas de date enregistrée (moment d’attribution) ou si la durée (time) n’a pas été spécifiée.
+             if (!$demande->start || !$demande->time) continue;
+                     
+             $debut = Carbon::parse($demande->start);   // date+heure de début
+             $fin = $debut->copy()->addMinutes($demande->time);//  $expiration = Carbon::parse($demande->date_demande)->addHours($demande->time);
+          
+             // Vérifier si nous sommes dans la periode d'attribution
+             if(now()->between($debut, $fin)) {
 
-             // Si la durée est écoulée
-             if(now()->greaterThanOrEqualTo($expiration)){
+                // Occuper la salle
+                
+                    $salle = Salle::find($demande->id_salle);
+                    if ($salle && $salle->statut !== 'occupee') {
+                        $salle->statut = 'occupee';
+                        $salle->save();
+                    }
+                
+                continue;
+             }   
+             // Si nous sommes à la fin 
+        
+             if(now()->greaterThanOrEqualTo($fin)){
                 $salle = Salle::find($demande->id_salle);
                 if ($salle) {
                     $salle->statut='libre';
                     $salle->save();
                 }
-
                 $demande->statut='terminee';
-                $demande->classe=null;
+                
                 $demande->save();
                 $this->info("Salle {$salle->id_salle} libérée (Demande #{$demande->id_demande}).");
              }
